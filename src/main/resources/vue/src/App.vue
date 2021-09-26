@@ -1,13 +1,19 @@
 <template>
-	<div id="app"></div>
+	<div id="app">
+		<Index></Index>
+	</div>
 </template>
 
 <script>
+import Index from "./components/content/Index.vue";
 export default {
 	name: "App",
-	components: {},
+	components: {
+		Index,
+	},
 };
 </script>
 
 <style>
+@import url("element-ui/lib/theme-chalk/index.css");
 </style>

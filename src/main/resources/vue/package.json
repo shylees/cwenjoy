@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "element-ui": "^2.15.6",
     "vue": "^2.5.2"
   },
   "devDependencies": {
@@ -57,5 +58,7 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": ".postcssrc.js",
+  "license": "ISC"
 }
