@@ -1,15 +1,19 @@
 <template>
 	<div class="index">
 		<Header></Header>
+		<router-view />
+		<Tabbar></Tabbar>
 	</div>
 </template>
 
 <script>
 import Header from "./Header.vue";
+import Tabbar from "./Tabbar.vue";
 export default {
 	name: "Index",
 	components: {
 		Header,
+		Tabbar,
 	},
 };
 </script>

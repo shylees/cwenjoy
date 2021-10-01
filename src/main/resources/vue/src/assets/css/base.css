@@ -3,9 +3,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: Gabriola;
   color: #333;
-  /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
 }
 
 input,
@@ -17,12 +15,14 @@ textarea {
   resize: none;
 }
 
+button {
+  font-family: Gabriola;
+}
+
 h1,
 h2,
 h3 {
-  /* font-size: 1rem; */
   font-weight: 400;
-
 }
 
 li {

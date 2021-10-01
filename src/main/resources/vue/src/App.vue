@@ -15,5 +15,4 @@ export default {
 </script>
 
 <style>
-@import url("element-ui/lib/theme-chalk/index.css");
 </style>

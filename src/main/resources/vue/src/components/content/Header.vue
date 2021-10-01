@@ -68,7 +68,7 @@
 							<mu-form-item
 								label="用户名"
 								prop="username"
-								:rules="usernameRules"
+								:rules="inUnameRules"
 								align="left"
 							>
 								<mu-text-field
@@ -80,7 +80,7 @@
 								align="left"
 								label="密码"
 								prop="password"
-								:rules="passwordRules"
+								:rules="inPwdRules"
 							>
 								<mu-text-field
 									type="password"
@@ -109,83 +109,41 @@
 						<span
 							class="el-dialog__title"
 							style="color: rgb(94, 94, 196); font-weight: 700"
-							>注 册</span
 						>
+							注 册
+						</span>
 					</div>
 					<mu-container>
 						<mu-form
-							:model="form"
+							ref="form"
+							:model="signupMessage"
 							class="mu-demo-form"
-							:label-position="labelPosition"
+							label-position="left"
 							label-width="100"
 						>
-							<mu-form-item prop="input" label="Input">
-								<mu-text-field v-model="form.input"></mu-text-field>
+							<mu-form-item prop="input" label="用户名:">
+								<mu-text-field v-model="signupMessage.uname"></mu-text-field>
 							</mu-form-item>
-							<mu-form-item prop="select" label="Select">
-								<mu-select v-model="form.select">
-									<mu-option
-										v-for="option in options"
-										:key="option"
-										:label="option"
-										:value="option"
-									></mu-option>
-								</mu-select>
-							</mu-form-item>
-							<mu-form-item prop="date" label="Date Time">
-								<mu-date-input
-									v-model="form.date"
-									type="dateTime"
-									actions
-								></mu-date-input>
-							</mu-form-item>
-							<mu-form-item prop="radio" label="Radio">
+
+							<mu-form-item prop="radio" label="性别:">
 								<mu-radio
-									v-model="form.radio"
-									value="male"
-									label="Male"
+									v-model="signupMessage.usex"
+									value="1"
+									label="男"
 								></mu-radio>
 								<mu-radio
-									v-model="form.radio"
-									value="female"
-									label="Female"
+									v-model="signupMessage.usex"
+									value="0"
+									label="女"
 								></mu-radio>
 							</mu-form-item>
-							<mu-form-item prop="checkbox" label="Checkbox">
-								<mu-checkbox
-									v-model="form.checkbox"
-									value="eat"
-									label="Eat"
-								></mu-checkbox>
-								<mu-checkbox
-									v-model="form.checkbox"
-									value="sleep"
-									label="Sleep"
-								></mu-checkbox>
-								<mu-checkbox
-									v-model="form.checkbox"
-									value="run"
-									label="Run"
-								></mu-checkbox>
-								<mu-checkbox
-									v-model="form.checkbox"
-									value="movie"
-									label="Movie"
-								></mu-checkbox>
+
+							<mu-form-item prop="input" label="密码:">
+								<mu-text-field v-model="signupMessage.upwd"></mu-text-field>
 							</mu-form-item>
-							<mu-form-item prop="switch" label="Switch">
-								<mu-switch v-model="form.switch"></mu-switch>
-							</mu-form-item>
-							<mu-form-item prop="slider" label="Slider">
-								<mu-slider v-model="form.slider"></mu-slider>
-							</mu-form-item>
-							<mu-form-item prop="textarea" label="Textarea">
-								<mu-text-field
-									multi-line
-									:rows="3"
-									:rows-max="6"
-									v-model="form.textarea"
-								></mu-text-field>
+
+							<mu-form-item prop="input" label="邮箱:">
+								<mu-text-field v-model="signupMessage.uemail"></mu-text-field>
 							</mu-form-item>
 						</mu-form>
 					</mu-container>
@@ -200,47 +158,34 @@
 </template>
 
 <script>
-import Publish from "./Publish.vue";
-
 export default {
 	name: "Header",
 	props: ["tabbar"],
-	components: {
-		Publish,
-	},
+	components: {},
 	data() {
 		return {
 			ispublicBoxShow: false,
 			isLogin: false,
 			issignin: false,
 			issignup: false,
-			usernameRules: [
-				{ validate: (val) => !!val, message: "必须填写用户名" },
-				{ validate: (val) => val.length >= 3, message: "用户名长度大于3" },
-			],
-			passwordRules: [
-				{ validate: (val) => !!val, message: "必须填写密码" },
-				{
-					validate: (val) => val.length >= 3 && val.length <= 10,
-					message: "密码长度大于3小于10",
-				},
-			],
+			inUnameRules: [{ validate: (val) => !!val, message: "必须填写用户名" }],
+			inPwdRules: [{ validate: (val) => !!val, message: "必须填写密码" }],
 			validateForm: {
 				username: "",
 				password: "",
 				isAgree: false,
 			},
-			options: ["Option 1", "Option 2"],
-			labelPosition: "left",
-			form: {
-				input: "",
-				select: "",
-				date: "",
-				radio: "",
-				checkbox: [],
-				switch: false,
-				slider: 30,
-				textarea: "",
+			upPwdRules: [
+				{
+					validate: (val) => val.length >= 3 && val.length <= 10,
+					message: "密码长度大于3小于10",
+				},
+			],
+			signupMessage: {
+				uname: "",
+				usex: "",
+				upwd: "",
+				uemail: "",
 			},
 		};
 	},
@@ -249,6 +194,7 @@ export default {
 			this.$refs.form.validate().then((result) => {
 				console.log("form valid: ", result);
 			});
+			console.log(this.signupMessage.uname);
 		},
 		clear() {
 			this.$refs.form.clear();
@@ -314,7 +260,7 @@ export default {
 
 .header .dialogBox {
 	background-color: rgba(255, 255, 255, 0.15);
-	font-family: "Microsoft YaHei";
+	/* font-family: "Microsoft YaHei"; */
 }
 
 .header .publish .publishBox textarea {
@@ -343,7 +289,7 @@ export default {
 	margin: 0 auto;
 	font-size: 13px;
 }
-.dialogBox .dialog-footer > button {
+.dialogBox button {
 	width: 4.75rem;
 	height: 1.75rem;
 	position: absolute;
@@ -360,7 +306,7 @@ export default {
 	transform: translateX(-0%);
 }
 
-.dialogBox .dialog-footer > button:hover {
+.dialogBox button:hover {
 	color: #000;
 	/* font-weight: 700; */
 	/* background: ; */

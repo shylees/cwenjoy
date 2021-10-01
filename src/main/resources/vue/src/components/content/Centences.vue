@@ -4,14 +4,14 @@
 		<h2><span>sentence Playground</span></h2>
 		<div class="centences">
 			<ul>
-				<li
+				<!-- <li
 					class="CenItem"
 					v-for="(item, index) in $store.state.centences"
 					:title="item"
 					:key="index"
 				>
 					{{ index }} . {{ item }}
-				</li>
+				</li> -->
 			</ul>
 		</div>
 	</div>
