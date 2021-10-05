@@ -19,6 +19,7 @@ export default {
 </script>
 
 <style scoped>
+@import "https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.css";
 @import url("../../assets/css/base.css");
 .header {
 	width: 100vw;

@@ -221,7 +221,7 @@ export default {
 	top: 0;
 	right: 0;
 	left: 0;
-	background: #fff;
+	background: #fbfbfb;
 	box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.08);
 }
 
@@ -275,6 +275,7 @@ export default {
 }
 .dialogBox .el-dialog {
 	margin-top: 20vh;
+	background-color: #fbfbfb;
 }
 .dialogBox .el-dialog__close::before:hover {
 	color: rgb(94, 94, 196);
@@ -346,9 +347,9 @@ export default {
 }
 
 .header .signinBox .el-dialog__body .el-dialog__header {
-	height: 50px;
+	/* height: 50px; */
 }
 .header .signinBox div {
-	background-color: #fff;
+	/* background-color: #fff; */
 }
 </style>

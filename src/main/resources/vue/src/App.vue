@@ -14,5 +14,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+#app {
+	/* min-width: 722px; */
+	/* overflow: scroll; */
+}
 </style>

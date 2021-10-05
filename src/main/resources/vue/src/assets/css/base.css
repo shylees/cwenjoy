@@ -6,6 +6,10 @@
   color: #333;
 }
 
+b {
+  font-weight: normal;
+}
+
 input,
 button,
 textarea {
@@ -13,6 +17,8 @@ textarea {
   border: none;
   background-color: none;
   resize: none;
+  border-color: transparent;
+
 }
 
 button {
@@ -35,12 +41,14 @@ div {
 
 .title {
   height: 4rem;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 4rem;
   font-size: 1.1rem;
   color: rgb(11, 11, 167);
   text-align: center;
   letter-spacing: 2px;
+  font-family: Gabriola;
+
 }
 
 input {
@@ -75,4 +83,8 @@ button {
 
 button:hover {
   background-color: rgba(230, 230, 250, 0.68);
+}
+
+ul {
+  padding: 0;
 }

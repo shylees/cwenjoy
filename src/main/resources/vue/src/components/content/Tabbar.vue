@@ -102,7 +102,13 @@ export default {
 	background-color: rgba(230, 230, 250, 0.7);
 }
 
+.tabbar span {
+	font-weight: normal;
+	font-size: 14px;
+}
 .tabbar > .active > span {
-	color: tomato;
+	color: rgb(130, 67, 192);
+	font-size: 16px;
+	font-weight: 700;
 }
 </style>

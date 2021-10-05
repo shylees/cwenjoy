@@ -1,6 +1,6 @@
 <template>
 	<div class="cwplay">
-		<p class="title">OTHER USERS</p>
+		<p class="title">COPYWRITING PLAYGROUNd</p>
 		<Centences />
 	</div>
 </template>
@@ -9,7 +9,7 @@
 import Centences from "./Centences.vue";
 export default {
 	name: "Cwplay",
-	component: {
+	components: {
 		Centences,
 	},
 	data() {
@@ -19,5 +19,6 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+@import url("../../assets/css/base.css");
 </style>

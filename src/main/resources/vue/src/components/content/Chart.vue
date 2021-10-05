@@ -14,13 +14,7 @@
 					:key="index"
 					:class="{ per: showimg[index] }"
 					@click="changeimg(index)"
-				>
-					.
-				</li>
-				<!-- <li :class="{ per: showimg[1] }" @click="changeimg(1)">.</li>
-				<li :class="{ per: showimg[2] }" @click="changeimg(2)">.</li>
-				<li :class="{ per: showimg[3] }" @click="changeimg(3)">.</li> -->
-				<!-- <li :class="{ per: showimg[4] }" @click="changeimg(4)">.</li> -->
+				></li>
 			</ul>
 		</div>
 
@@ -31,8 +25,6 @@
 			@click="back()"
 		>
 			<img :src="backSrc" alt="" />
-
-			<!-- <i class="iconfont icon-qianjin"></i> -->
 		</button>
 		<button
 			class="next"
@@ -40,7 +32,6 @@
 			@mouseout="outNext()"
 			@click="next()"
 		>
-			<!-- <i class="iconfont icon-houtui">&#xe693;</i> -->
 			<img :src="nextSrc" alt="" />
 		</button>
 	</div>
@@ -112,7 +103,8 @@ export default {
 };
 </script>
 
-<style>
+<style scpoed>
+/* @import url("../../assets/css/base.css");/ */
 .chart button {
 	display: block;
 	background-color: #fbfbfb;
@@ -122,6 +114,8 @@ export default {
 	width: 2em;
 	height: 2em;
 	cursor: pointer;
+	border-color: transparent;
+	/* color:transparent; */
 }
 
 .chart > .back {
@@ -133,6 +127,7 @@ export default {
 }
 .chart button img {
 	width: 2em;
+	height: 2em;
 }
 
 .chart ul.bg {
@@ -141,6 +136,7 @@ export default {
 	display: flex;
 	height: 18em;
 	/* background-color: rgba(60, 60, 60, 0.5); */
+	padding: 0;
 }
 
 .chart ul.bg li {
@@ -188,18 +184,21 @@ export default {
 .chart .point ul {
 	height: 1em;
 	position: relative;
-	width: 2.8em;
+	width: 6em;
 	left: 50%;
+	display: flex;
 	transform: translateX(-50%);
 	/* background-color: rgb(230, 230, 250); */
 }
-.chart .point ul > li {
+.chart .point ul li {
+	flex: 1;
 	position: relative;
 	float: left;
-	height: 1em;
-	line-height: 1em;
-	font-size: 4em;
-	top: -201%;
+	/* height: 1em; */
+	/* width: 1em; */
+	/* line-height: 1em; */
+	/* font-size: 4em; */
+	top: -200%;
 	margin-right: 0px;
 	color: #cdcdcd;
 	transition: all 0.3s;
