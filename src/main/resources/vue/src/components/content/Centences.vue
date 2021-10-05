@@ -5,11 +5,11 @@
 		<div class="centences">
 			<mu-container class="centencesType">
 				<mu-tabs
-					:value.sync="active1"
 					indicator-color="transparent"
 					inverse
 					color="secondary"
 					full-width
+					:opacity="0.7"
 				>
 					<mu-tab data-type="0">全部</mu-tab>
 					<mu-tab data-type="1">生活文艺</mu-tab>
@@ -54,7 +54,7 @@ export default {
 	name: "Centences",
 	data() {
 		return {
-			active1: 0,
+			// active1: 0,
 			cwdata: [
 				{ cwid: "1", cwtext: "用绝对清醒的理智，压制不该有的情绪" },
 				{

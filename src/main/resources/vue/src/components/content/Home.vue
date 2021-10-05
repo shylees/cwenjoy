@@ -2,16 +2,19 @@
 	<div class="home homeP">
 		<p class="title">HOME</p>
 		<Chart />
+		<Inform />
 	</div>
 </template>
 
 <script>
 import Chart from "./Chart.vue";
+import Inform from "./Inform.vue";
 
 export default {
 	name: "Home",
 	components: {
 		Chart,
+		Inform,
 	},
 };
 </script>

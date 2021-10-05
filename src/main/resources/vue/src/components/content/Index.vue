@@ -25,4 +25,12 @@ export default {
 	width: 100vw;
 	height: 10vh;
 }
+.index {
+	height: 100vh;
+	overflow: hidden;
+}
+.index > div:nth-of-type(2) {
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
 </style>
