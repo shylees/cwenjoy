@@ -32,5 +32,6 @@ export default {
 .index > div:nth-of-type(2) {
 	overflow-y: scroll;
 	overflow-x: hidden;
+	min-height: 80vh;
 }
 </style>

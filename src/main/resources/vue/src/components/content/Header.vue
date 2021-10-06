@@ -160,7 +160,6 @@
 <script>
 export default {
 	name: "Header",
-	props: ["tabbar"],
 	components: {},
 	data() {
 		return {
@@ -207,7 +206,13 @@ export default {
 			this.issignup = false;
 		},
 	},
-
+	mounted() {
+		if (localStorage.cwuname != undefined) {
+			this.isLogin = true;
+		} else {
+			this.isLogin = false;
+		}
+	},
 	computed: {},
 };
 </script>

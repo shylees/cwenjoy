@@ -58,9 +58,9 @@ export default {
 				path: "/cwplay",
 			});
 		},
-		toChangeTabberUserid() {
-			this.userid = this.$route.query.id;
-		},
+	},
+	mounted() {
+		this.toHome();
 	},
 };
 </script>
