@@ -1,18 +1,22 @@
 <template>
 	<ul class="centence">
-		<li class="CenItem" v-for="item in this.cwdataed" :key="item.cwid">
-			<span>{{ item.cwtext }} </span>
+		<h2 class="title">历史文案</h2>
+		<li class="CenItem" v-for="(item, index) in this.cwdataed" :key="item.cwid">
+			<span>{{ index + 1 }}.{{ item.cwtext }} </span>
+			<b
+				class="demo-button share showof"
+				@click="$toast.success('已复制到剪切板！')"
+				color="success"
+				><i>分享</i></b
+			>
+			<b
+				class="demo-button deletecw showof"
+				color="secondary"
+				@click="confirmDelete()"
+				><i>删除</i></b
+			>
 			<p>
-				<b
-					class="demo-button"
-					@click="$toast.success('已复制到剪切板！')"
-					color="success"
-					>分享</b
-				>
-				<b class="demo-button" color="secondary" @click="confirmDelete()"
-					>删除</b
-				>
-				<b class="demo-button">--{{ item.cwtime }}</b>
+				<b class="demo-button">发布时间: {{ item.cwtime }}</b>
 			</p>
 		</li>
 	</ul>
@@ -71,28 +75,72 @@ export default {
 	border-radius: 8px;
 }
 .CenItem {
+	position: relative;
 	border-bottom: 1px solid rgb(161, 115, 207);
 	color: #444;
 	width: 100%;
-	padding: 10px 15px 5px;
+	padding: 10px 15px 3px 0;
 	margin: 4px 8px;
 	text-align: left;
 }
 .CenItem span {
 	font-size: 16px;
 	display: block;
-	padding-right: 20px;
+	padding-right: 10px;
+	width: calc(100% - 10rem);
 }
 .CenItem > p {
-	float: right;
+	margin: 8px 0 0 10px;
+	float: left;
 }
 .CenItem > p b {
-	font-size: 12px;
+	font-size: 13px;
 	color: #aaa;
 	cursor: pointer;
-	margin: 0 3px;
 }
 .CenItem > p b:hover {
 	color: #000;
+}
+.CenItem:hover .showof {
+	opacity: 1;
+}
+.CenItem .showof {
+	opacity: 0;
+	top: 0;
+	right: 0;
+	position: absolute;
+	display: inline-block;
+	cursor: pointer;
+	width: 5rem;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.2);
+	text-align: center;
+	transition: all 0.3s;
+}
+.CenItem .showof:hover {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.CenItem .showof:nth-of-type(1) {
+	right: 5rem;
+	border-right: 1px solid #ddd;
+}
+.CenItem .showof i {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.CenItem:hover .time {
+	display: none;
+}
+.CenItem .time {
+	display: block;
+	width: 5rem;
+	position: absolute;
+	color: #777;
+	font-size: 12px;
+	right: 0.9375rem;
+	bottom: 0.625rem;
 }
 </style>
