@@ -32,43 +32,7 @@
 						class="contentItem"
 						v-show="this.persideractive === this.persider[0]"
 					>
-						<div class="button">
-							<button v-if="isedit" class="edit" @click="edit()">edit</button>
-							<button v-if="issubmit" class="edit" @click="submit()">
-								submit
-							</button>
-						</div>
-
-						<div class="information">
-							<div class="facebig">
-								<img src="../../../static/img/header/logo.jpg" alt="" />
-								<b class="line"></b>
-							</div>
-							<div class="letters">
-								<ul>
-									<li>
-										<span>userID:</span>
-										<span class="userID">{{}}</span>
-									</li>
-									<li>
-										<span>username:</span>
-										<span class="nameValue"> {{}} </span>
-									</li>
-									<li>
-										<span>sex:</span>
-										<span class="sexValue">{{}}</span>
-									</li>
-									<li>
-										<span>birth:</span>
-										<span class="birthValue"> {{}} </span>
-									</li>
-									<li>
-										<span>signature:</span>
-										<span class="signatureValue"> {{}} </span>
-									</li>
-								</ul>
-							</div>
-						</div>
+						<Perinformation />
 					</sui-segment>
 
 					<!-- 历史文案 -->
@@ -92,6 +56,7 @@
 </template>
 
 <script>
+import Perinformation from "./Perinformation.vue";
 import CollectCW from "./CollectCW.vue";
 import History from "./HistoryCW.vue";
 export default {
@@ -100,14 +65,22 @@ export default {
 	components: {
 		CollectCW,
 		History,
+		Perinformation,
 	},
 	data() {
 		return {
 			isLogin: false,
 			persider: ["个人资料", "历史文案", "文案收藏"],
 			persideractive: "个人资料",
-			isedit: true,
-			issubmit: false,
+			user: {
+				userID: "1",
+				useremail: "1154130154@qq.com",
+				cwuname: "qsh",
+				sexValue: "女",
+				illegalTime: "0",
+				userstatue: "正常",
+				userface: "../../../static/img/header/logo.jpg",
+			},
 		};
 	},
 	methods: {
@@ -117,28 +90,20 @@ export default {
 		select(name) {
 			this.persideractive = name;
 		},
-		edit() {
-			this.isedit = false;
-			this.issubmit = true;
-			const params = ["nameValue", "sexValue", "birthValue", "signatureValue"];
-			toEdit("edit", params);
-		},
-		submit() {
-			this.isedit = true;
-			this.issubmit = false;
-			const params = ["nameValue", "sexValue", "birthValue", "signatureValue"];
-			const values = getChangeValues(params);
-			toSubmit(params, values);
-		},
 	},
 	mounted() {
-		console.log(localStorage.cwuname);
 		// localStorage.setItem("cwuname", "qsh");
+		localStorage.removeItem("username");
+		// console.log(localStorage);
+		// for (let val in this.user) {
+		// 	localStorage.setItem(val, this.user[val]);
+		// }
 		if (localStorage.cwuname) {
 			this.isLogin = true;
 		} else {
 			this.isLogin = false;
 		}
+		// console.log(localStorage);
 	},
 };
 </script>
@@ -178,64 +143,5 @@ export default {
 	top: 0;
 	height: auto;
 	background-color: #fbfbfb;
-}
-
-/*                        个人资料                              */
-.information {
-	display: flex;
-	padding: 2% 10%;
-	border: rgb(156, 156, 255) dashed 1px;
-}
-.information > div {
-	flex: 1;
-	text-align: center;
-}
-.Personal b.line {
-	display: inline-block;
-	width: 3px;
-	border-right: 2px solid rgb(161, 115, 207);
-	position: relative;
-	left: 1.6em;
-	height: 90%;
-	border-radius: 3em/100em;
-	top: 50%;
-	transform: translate(0, -50%);
-	width: 2px;
-}
-
-.information > div:nth-of-type(2) {
-	flex: 2;
-}
-.facebig img {
-	width: 90%;
-	max-width: 12em;
-
-	border-radius: 100em;
-}
-.letters {
-	flex: 2;
-}
-
-.letters ul > li {
-	display: flex;
-}
-.letters ul > li > span {
-	padding: 1% 2%;
-	flex: 1;
-	text-align: right;
-	font-size: 1.2em;
-	color: #111;
-}
-.letters ul > li > span:nth-of-type(2) {
-	flex: 2;
-	text-align: left;
-	height: 2.1em;
-	line-height: 2.1em;
-	font-size: 0.9em;
-	font-family: "KaTi_GB2312";
-	color: #333;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 }
 </style>
