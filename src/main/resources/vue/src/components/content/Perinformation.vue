@@ -159,17 +159,7 @@ export default {
 	color: #333;
 	white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis;
-}
-.editinput,
-input {
-	width: 80%;
 	height: 2.4em;
-	font-size: 0.8em;
-	padding: 0 10px;
-	line-height: 2.4em;
-	color: #777;
-	border: #111 1px solid;
-	border-radius: 8px;
+	text-overflow: ellipsis;
 }
 </style>

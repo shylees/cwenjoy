@@ -94,10 +94,11 @@ export default {
 	mounted() {
 		// localStorage.setItem("cwuname", "qsh");
 		localStorage.removeItem("username");
+		// localStorage.removeItem("cwuname");
 		// console.log(localStorage);
-		// for (let val in this.user) {
-		// 	localStorage.setItem(val, this.user[val]);
-		// }
+		for (let val in this.user) {
+			localStorage.setItem(val, this.user[val]);
+		}
 		if (localStorage.cwuname) {
 			this.isLogin = true;
 		} else {

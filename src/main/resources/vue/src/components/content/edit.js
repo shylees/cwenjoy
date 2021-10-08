@@ -7,9 +7,9 @@ export function toEdit(edit, params) {
     element.innerText = "";
     const input = document.createElement("input");
     input.value = value;
-    input.className = "editinput"
+    input.type = "text"
+    input.style.cssText = "outline:none;width: 80%;height: 2.4em;font-size: 0.8em;padding: 0 10px;line - height: 2.4em;color: #777;border: #111 1px solid;border-radius: 8px; "
     element.appendChild(input)
-    // console.log(element);
 
   }
 }

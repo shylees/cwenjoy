@@ -104,7 +104,8 @@ export default {
 </script>
 
 <style scpoed>
-/* @import url("../../assets/css/base.css");/ */
+/* @import url("../../assets/css/base.css"); */
+
 .chart button {
 	display: block;
 	background-color: #fbfbfb;
@@ -115,6 +116,7 @@ export default {
 	height: 2em;
 	cursor: pointer;
 	border-color: transparent;
+	outline: none;
 	/* color:transparent; */
 }
 
@@ -194,10 +196,6 @@ export default {
 	flex: 1;
 	position: relative;
 	float: left;
-	/* height: 1em; */
-	/* width: 1em; */
-	/* line-height: 1em; */
-	/* font-size: 4em; */
 	top: -200%;
 	margin-right: 0px;
 	color: #cdcdcd;

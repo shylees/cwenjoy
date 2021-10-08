@@ -96,11 +96,11 @@ export default {
 .CenItem > p b {
 	font-size: 13px;
 	color: #aaa;
-	cursor: pointer;
+	/* cursor: pointer; */
 }
-.CenItem > p b:hover {
+/* .CenItem > p b:hover {
 	color: #000;
-}
+} */
 .CenItem:hover .showof {
 	opacity: 1;
 }

@@ -21,8 +21,27 @@
 					cols="40"
 					rows="4"
 					placeholder="分享你的文案吧！"
-					ref="textA"
 				></textarea>
+				<sui-form class="cwtype">
+					<sui-form-fields inline>
+						文案类型：
+						<sui-form-field>
+							<sui-checkbox label="生活" radio value="0" />
+						</sui-form-field>
+						<sui-form-field>
+							<sui-checkbox label="阳光" radio value="1" />
+						</sui-form-field>
+						<sui-form-field>
+							<sui-checkbox label="悲观" radio value="2" />
+						</sui-form-field>
+						<sui-form-field>
+							<sui-checkbox label="爱情" radio value="3" />
+						</sui-form-field>
+						<sui-form-field>
+							<sui-checkbox label="祝福" radio value="4" />
+						</sui-form-field>
+					</sui-form-fields>
+				</sui-form>
 
 				<span slot="footer" class="dialog-footer">
 					<el-button class="cancel" @click="ispublicBoxShow = false"
@@ -349,6 +368,14 @@ export default {
 }
 .header .sign > span:hover {
 	font-weight: 700;
+}
+form.cwtype {
+	width: 100%;
+	margin: 1rem auto 0;
+}
+form.cwtype .fields {
+	margin: 0 auto;
+	width: auto;
 }
 
 .header .signinBox .el-dialog__body .el-dialog__header {
