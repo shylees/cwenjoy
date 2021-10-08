@@ -62,7 +62,7 @@
 			<img
 				class="userface"
 				v-show="isLogin"
-				src="../../assets/img/users/stu1.jpg"
+				:src="userface"
 				alt=""
 				title="username"
 			/>
@@ -182,6 +182,7 @@ export default {
 	components: {},
 	data() {
 		return {
+			userface: "",
 			ispublicBoxShow: false,
 			isLogin: false,
 			issignin: false,
@@ -228,6 +229,7 @@ export default {
 	mounted() {
 		if (localStorage.cwuname != undefined) {
 			this.isLogin = true;
+			this.userface = localStorage.userface;
 		} else {
 			this.isLogin = false;
 		}
