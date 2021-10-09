@@ -26,7 +26,9 @@
 					</li>
 					<li>
 						<span>性别:</span>
-						<span class="sexValue">{{ this.user.usex }}</span>
+						<span class="sexValue">{{
+							this.user.usex == 1 ? "男" : "女"
+						}}</span>
 					</li>
 					<li>
 						<span>违规次数:</span>
@@ -34,7 +36,9 @@
 					</li>
 					<li>
 						<span>账号状态:</span>
-						<span class="userstatue"> {{ this.user.ustatus }} </span>
+						<span class="userstatue">
+							{{ this.user.ustatus == 0 ? "正常" : "异常" }}
+						</span>
 					</li>
 				</ul>
 			</div>

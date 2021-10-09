@@ -20,7 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/u")
+    @RequestMapping("/getalluser")
     public String queryAllUser() throws Exception {
         List<User> users = userService.queryAllUser();
         return new ObjectMapper().writeValueAsString(users);
@@ -31,5 +31,12 @@ public class UserController {
         User user = userService.queryUserById(uid);
         return new ObjectMapper().writeValueAsString(user);
     }
+
+    @PostMapping("/adduser")
+    public int addUser(@RequestBody User user){
+        int row = userService.addUser(user);
+        return row;
+    }
+
 
 }

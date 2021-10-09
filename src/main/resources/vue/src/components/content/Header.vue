@@ -81,7 +81,7 @@
 					<mu-container>
 						<mu-form ref="form" :model="signinMessage" class="mu-demo-form">
 							<mu-form-item
-								label="用户名/用户id"
+								label="用户id"
 								prop="username"
 								:rules="inUnameRules"
 								align="left"
@@ -167,7 +167,7 @@
 					</mu-container>
 					<span slot="footer" class="dialog-footer">
 						<el-button class="cancel" @click="clear">取 消</el-button>
-						<el-button class="confirm" @click="submit">注 册</el-button>
+						<el-button class="confirm" @click="signup">注 册</el-button>
 					</span>
 				</el-dialog>
 			</p>
@@ -192,19 +192,13 @@ export default {
 			signinid: "",
 			siginpwd: "",
 			issignup: false,
-			inUnameRules: [{ validate: (val) => !!val, message: "必须填写用户名" }],
-			inPwdRules: [{ validate: (val) => !!val, message: "必须填写密码" }],
+			inUnameRules: [{ validate: (val) => !!val, message: "必须填写" }],
+			inPwdRules: [{ validate: (val) => !!val, message: "必须填写" }],
 			signinMessage: {
 				username: "",
 				password: "",
 				isAgree: false,
 			},
-			upPwdRules: [
-				{
-					validate: (val) => val.length >= 3 && val.length <= 10,
-					message: "密码长度大于3小于10",
-				},
-			],
 			signupMessage: {
 				uname: "",
 				usex: "",
@@ -230,6 +224,39 @@ export default {
 			this.issignup = false;
 		},
 
+		shouldsingup() {
+			const uemail = this.signupMessage.uemail;
+			const upwd = this.signupMessage.upwd;
+			const usex = this.signupMessage.usex;
+			const uname = this.signupMessage.uname;
+			const uface =
+				"../../../static/img/face/usex" + this.signupMessage.usex + ".png";
+			axios({
+				method: "post",
+				url: "/adduser",
+				data: {
+					uemail,
+					upwd,
+					usex,
+					uface,
+					uname,
+					uillegalTime: 0,
+					ustatus: 0,
+				},
+			})
+				.then((res) => {
+					// console.log(res);
+					if (res.data > 0) {
+						this.$toast.success("注册成功");
+					} else {
+						this.$toast.warning("注册失败");
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		},
+
 		// 登录
 		signin() {
 			axios
@@ -243,7 +270,8 @@ export default {
 						for (const key in res.data) {
 							localStorage.setItem(key, res.data[key]);
 						}
-						this.$$toast.success("登录成功！");
+						this.$toast.success("登录成功！");
+						location.reload();
 					} else {
 						this.$toast.error("用户id/密码错误！");
 					}
@@ -253,6 +281,38 @@ export default {
 				});
 			this.$refs.form.clear();
 			this.issignin = false;
+		},
+		// 注册
+		signup() {
+			if (!this.signupMessage.uemail.match(/^\w+@\w+\.\w+$/i)) {
+				this.$toast.warning("邮箱格式不正确");
+			} else {
+				// 校验数据
+				axios({
+					method: "get",
+					url: "/getalluser",
+				}).then((res) => {
+					// console.log(res);
+					let should = true;
+					for (let i = 0; i < res.data.length; i++) {
+						if (this.signupMessage.uname == res.data[i].uname) {
+							should = false;
+							this.$toast.warning("用户已存在");
+							break;
+						} else if (this.signupMessage.uemail == res.data[i].uemail) {
+							should = false;
+							this.$toast.warning("邮箱已存在");
+							break;
+						}
+					}
+					if (should) {
+						this.shouldsingup();
+					} else {
+						this.$toast.error("注册失败");
+					}
+					this.issignup = false;
+				});
+			}
 		},
 		// 发布
 		publishcw() {

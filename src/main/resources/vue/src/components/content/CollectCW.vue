@@ -95,24 +95,26 @@ export default {
 	},
 	mounted() {
 		// 获取所有收藏的文案
-		axios({
-			method: "get",
-			url: "/initcollectbyid",
-			params: {
-				uid: localStorage.uid,
-			},
-		})
-			.then((res) => {
-				this.collectdata = res.data;
-				this.cwidlist = [];
-				for (let i = 0; i < res.data.length; i++) {
-					this.cwidlist.push(res.data[i].cwid);
-				}
-				localStorage.setItem("cwidlist", this.cwidlist);
+		if (localStorage.uid) {
+			axios({
+				method: "get",
+				url: "/initcollectbyid",
+				params: {
+					uid: localStorage.uid,
+				},
 			})
-			.catch((err) => {
-				console.log(err);
-			});
+				.then((res) => {
+					this.collectdata = res.data;
+					this.cwidlist = [];
+					for (let i = 0; i < res.data.length; i++) {
+						this.cwidlist.push(res.data[i].cwid);
+					}
+					localStorage.setItem("cwidlist", this.cwidlist);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
 	},
 };
 </script>
