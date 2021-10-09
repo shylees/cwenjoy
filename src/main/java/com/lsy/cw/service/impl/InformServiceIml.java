@@ -34,6 +34,11 @@ public class InformServiceIml implements InformService {
         return informDao.queryInformByStatus(instatus);
     }
 
+//    @Override
+//    public  Inform queryInfomwithCwtext(int inid,int cwid){
+//        return informDao.queryInfomwithCwtext(inid, cwid);
+//    }
+
     @Override
     public int addInform(Inform inform) {
         return informDao.addInform(inform);

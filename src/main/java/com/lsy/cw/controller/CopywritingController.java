@@ -51,6 +51,8 @@ public class CopywritingController {
         return row;
     }
 
+
+
     @RequestMapping("/deletecwbycwid")
     public int deteleCopyWriting(int cwid) {
         int row = copywritingService.deleteCopyWriting(cwid);

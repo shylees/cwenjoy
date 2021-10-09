@@ -35,6 +35,14 @@
 				>
 					<PubNotion />
 				</sui-segment>
+
+				<!-- 所有警告消息 -->
+				<sui-segment
+					class="contentItem"
+					v-show="this.persideractive === this.persider[2]"
+				>
+					<Allwarn />
+				</sui-segment>
 			</sui-grid-column>
 		</sui-grid>
 	</div>
@@ -43,17 +51,20 @@
 <script>
 import Warnmess from "./Warnmess.vue";
 import PubNotion from "./PubNotion.vue";
+import Allwarn from "./Allwarn.vue";
+
 export default {
 	name: "ManagerPer",
 	components: {
 		Warnmess,
 		PubNotion,
+		Allwarn,
 	},
 	data() {
 		return {
 			isLogin: false,
-			persider: ["警告消息", "发布公告"],
-			persideractive: "警告消息",
+			persider: ["未处理的举报消息", "发布公告", "所有举报消息"],
+			persideractive: "未处理的举报消息",
 		};
 	},
 	methods: {

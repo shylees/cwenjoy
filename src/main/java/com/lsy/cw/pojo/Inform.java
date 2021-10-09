@@ -17,4 +17,6 @@ public class Inform {
     private int cwid;
 
     private int instatus;
+
+//    private String cwtext;
 }

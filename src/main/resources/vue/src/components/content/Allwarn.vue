@@ -1,6 +1,6 @@
 <template>
 	<ul class="centence">
-		<h2 class="title">未处理的举报消息</h2>
+		<h2 class="title">所有的举报消息</h2>
 		<li
 			class="CenItem"
 			is-dot
@@ -23,61 +23,6 @@
 			<span>
 				<b>是否处理:</b> {{ item.instatus == 0 ? "未处理" : "已处理" }}</span
 			>
-			<b
-				class="solveInform showof"
-				v-if="item.instatus == 0"
-				color="success"
-				@click="solveInform($event)"
-				><i>处理举报</i></b
-			>
-
-			<el-dialog
-				class="solveInformBox dialogBox"
-				:visible.sync="issolveInformShow"
-				width="40%"
-			>
-				<mu-container>
-					<mu-form
-						v-if="warn.informdata[0]"
-						:model="warn"
-						class="mu-demo-form"
-						label-position="left"
-						label-width="100"
-					>
-						<mu-form-item label="编辑警告信息">
-							<mu-text-field
-								v-model="warn.toInformtext"
-								value="warn.toInformtext"
-								ref="warnval"
-							>
-							</mu-text-field>
-						</mu-form-item>
-						<mu-form-item label="选择警告的人">
-							<mu-radio
-								v-model="warn.informid"
-								label="被举报的人id"
-								:value="warn.informdata[0].ineduid"
-							></mu-radio>
-							<mu-radio
-								v-model="warn.informid"
-								:value="warn.informdata[0].inuid"
-								label="举报人id"
-							></mu-radio>
-						</mu-form-item>
-					</mu-form>
-				</mu-container>
-
-				<span slot="footer" class="dialog-footer">
-					<el-button
-						class="cancel"
-						@click="(issolveInformShow = false), $toast.message('选择了取消。')"
-						>取 消</el-button
-					>
-					<el-button class="confirm" type="primary" @click="confirmInform"
-						>确 定</el-button
-					>
-				</span>
-			</el-dialog>
 		</li>
 	</ul>
 </template>
@@ -85,7 +30,7 @@
 <script>
 import axios from "axios";
 export default {
-	name: "Warnmess",
+	name: "Allwarn",
 	data() {
 		return {
 			issolveInformShow: false,
@@ -103,7 +48,7 @@ export default {
 		getallinform() {
 			axios({
 				method: "get",
-				url: "/getallinformbystatusz",
+				url: "/queryAllInform",
 			})
 				.then((res) => {
 					this.indata = res.data;
@@ -136,71 +81,6 @@ export default {
 						console.log(err);
 					});
 			}
-		},
-
-		// 处理 警告
-		solveInform(e) {
-			this.issolveInformShow = true;
-			this.warn.informdata = this.indata.filter(
-				(item) => item.inid == e.currentTarget.parentElement.dataset.inid
-			);
-		},
-
-		// 发布 警告
-		confirmInform() {
-			this.issolveInformShow = false;
-
-			if (!this.warn.toInformtext) {
-				this.$toast.warning("警告信息不能为空！");
-			} else if (!this.warn.informid) {
-				this.$toast.warning("警告人id不能为空！");
-			} else {
-				const that = this;
-				const inid = this.warn.informdata[0].inid;
-				const ncontext = this.$refs.warnval[2].value;
-				console.log(inid);
-				console.log(ncontext);
-				axios({
-					method: "post",
-					url: "/addnotion",
-					data: {
-						ncontext,
-						ntime: Date.parse(new Date()),
-						ntype: "1",
-					},
-					headers: {
-						"Access-Control-Allow-Origin": "*",
-					},
-				})
-					.then((res) => {
-						if (res.data > 0) {
-							that.changeinformstatus(inid);
-							this.$toast.success("已发布警告！");
-						}
-					})
-					.catch((err) => {
-						console.log(err);
-					});
-			}
-		},
-
-		// 修改 举报信息的 状态
-		changeinformstatus(inid) {
-			const id = inid;
-			axios({
-				method: "get",
-				url: "/updateinformsolvestatus",
-				params: { inid: id },
-				headers: {
-					"Access-Control-Allow-Origin": "*",
-				},
-			})
-				.then((res) => {
-					location.reload();
-				})
-				.catch((err) => {
-					console.log(err);
-				});
 		},
 	},
 	mounted() {

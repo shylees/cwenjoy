@@ -22,6 +22,9 @@ public interface InformDao {
     @Select("select * from inform where instatus = #{instatus}")
     List<Inform> queryInformByStatus(int instatus);
 
+//    @Select("select inid,ineduid,inuid,inform.cwid,instatus,cwtext from inform,copywriting where inform.inid=#{inid} and copywriting.cwid = #{cwid};")
+//    Inform queryInfomwithCwtext(int inid,int cwid);
+
     @Insert("insert into inform (ineduid, inuid, cwid, instatus) values (#{ineduid}, #{inuid}, #{cwid}, #{instatus})")
     @Options(useGeneratedKeys = true, keyProperty = "inid", keyColumn = "inid")
     int addInform(Inform inform);

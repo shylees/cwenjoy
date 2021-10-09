@@ -25,6 +25,7 @@
 						v-for="item in this.cwdata"
 						:key="item.cwid"
 						:data-cwid="item.cwid"
+						:data-uid="item.uid"
 					>
 						<span>{{ item.cwtext }}</span>
 						<p>
@@ -42,7 +43,10 @@
 								color="success"
 								>分享</b
 							>
-							<b class="demo-button" color="secondary" @click="confirmInform()"
+							<b
+								class="demo-button"
+								color="secondary"
+								@click="confirmInform($event)"
 								>举报</b
 							>
 						</p>
@@ -131,15 +135,35 @@ export default {
 			}
 		},
 		// 举报
-		confirmInform() {
+		confirmInform(e) {
 			if (!localStorage.uid) {
 				this.$toast.warning("请先登录");
 			} else {
+				const ineduid = e.currentTarget.parentElement.parentElement.dataset.uid;
+				const inuid = localStorage.uid;
+				const cwid = e.currentTarget.parentElement.parentElement.dataset.cwid;
+
 				this.$confirm("确定要举该文案？", "tip", {
 					type: "warning",
 				}).then(({ result }) => {
 					if (result) {
-						this.$toast.success("举报成功！");
+						axios({
+							method: "post",
+							url: "/addinform",
+							data: {
+								ineduid,
+								inuid,
+								cwid,
+								instatus: 0,
+							},
+						}).then((res) => {
+							// console.log(res);
+							if (res.data > 0) {
+								this.$toast.success("举报成功！");
+							} else {
+								this.$toast.warning("举报失败!");
+							}
+						});
 					} else {
 						this.$toast.message("取消举报。");
 					}

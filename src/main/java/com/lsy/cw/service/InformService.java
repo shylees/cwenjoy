@@ -14,6 +14,8 @@ public interface InformService {
 
     List<Inform> queryInformByStatus(int instatus);
 
+//    Inform queryInfomwithCwtext(int inid,int cwid);
+
     int addInform(Inform inform);
 
     int deleteInform(int inid);
