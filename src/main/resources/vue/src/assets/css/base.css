@@ -154,3 +154,7 @@ ul {
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.08);
   background-color: rgb(230, 230, 250);
 }
+
+.dialogBox .el-dialog__headerbtn {
+  display: none;
+}

@@ -16,33 +16,27 @@
 				:visible.sync="ispublicBoxShow"
 				width="40%"
 			>
+				<h2 class="title">发表文案</h2>
 				<textarea
 					name="publishBoxContent"
 					cols="40"
 					rows="4"
 					placeholder="分享你的文案吧！"
 				></textarea>
-				<sui-form class="cwtype">
-					<sui-form-fields inline>
-						文案类型：
-						<sui-form-field>
-							<sui-checkbox label="生活" radio value="0" />
-						</sui-form-field>
-						<sui-form-field>
-							<sui-checkbox label="阳光" radio value="1" />
-						</sui-form-field>
-						<sui-form-field>
-							<sui-checkbox label="悲观" radio value="2" />
-						</sui-form-field>
-						<sui-form-field>
-							<sui-checkbox label="爱情" radio value="3" />
-						</sui-form-field>
-						<sui-form-field>
-							<sui-checkbox label="祝福" radio value="4" />
-						</sui-form-field>
-					</sui-form-fields>
-				</sui-form>
-
+				<mu-form
+					:model="cw"
+					class="mu-demo-form"
+					label-position="left"
+					label-width="100"
+				>
+					<mu-form-item label="文案类型">
+						<mu-radio v-model="cw.cwtype" value="0" label="生活"></mu-radio>
+						<mu-radio v-model="cw.cwtype" value="1" label="阳光"></mu-radio>
+						<mu-radio v-model="cw.cwtype" value="2" label="悲观"></mu-radio>
+						<mu-radio v-model="cw.cwtype" value="3" label="爱情"></mu-radio>
+						<mu-radio v-model="cw.cwtype" value="4" label="祝福"></mu-radio>
+					</mu-form-item>
+				</mu-form>
 				<span slot="footer" class="dialog-footer">
 					<el-button
 						class="cancel"
@@ -185,7 +179,11 @@ export default {
 	data() {
 		return {
 			userface: "",
+			cw: {
+				cwtype: "0",
+			},
 			ispublicBoxShow: false,
+
 			isLogin: false,
 			issignin: false,
 			issignup: false,
@@ -330,5 +328,8 @@ form.cwtype .fields {
 }
 .header .signinBox div {
 	/* background-color: #fff; */
+}
+.mu-radio {
+	height: 32px;
 }
 </style>

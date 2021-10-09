@@ -33,12 +33,7 @@
 					class="contentItem"
 					v-show="this.persideractive === this.persider[1]"
 				>
-				</sui-segment>
-
-				<sui-segment
-					class="contentItem"
-					v-show="this.persideractive === this.persider[2]"
-				>
+					<PubNotion />
 				</sui-segment>
 			</sui-grid-column>
 		</sui-grid>
@@ -47,10 +42,12 @@
 
 <script>
 import Warnmess from "./Warnmess.vue";
+import PubNotion from "./PubNotion.vue";
 export default {
 	name: "ManagerPer",
 	components: {
 		Warnmess,
+		PubNotion,
 	},
 	data() {
 		return {

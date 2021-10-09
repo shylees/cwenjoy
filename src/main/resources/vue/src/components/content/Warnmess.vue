@@ -38,7 +38,7 @@
 				<mu-container>
 					<mu-form class="mu-demo-form" label-position="left" label-width="100">
 						<mu-form-item label="编辑警告信息">
-							<mu-text-field></mu-text-field>
+							<mu-text-field v-model="toInformtext"></mu-text-field>
 						</mu-form-item>
 						<mu-form-item label="选择警告的人">
 							<mu-select v-model="toInformid" full-width>
@@ -79,6 +79,7 @@ export default {
 			issolveInformShow: false,
 			toInformid: "1",
 			Informids: [],
+			toInformtext: "",
 			indata: [
 				{
 					inid: "1",
