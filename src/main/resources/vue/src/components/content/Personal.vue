@@ -39,7 +39,6 @@ export default {
 				type: "warning",
 			}).then(({ result }) => {
 				if (result) {
-					this.$toast.success("选择了确定！");
 					localStorage.removeItem("uid");
 					localStorage.removeItem("uname");
 					localStorage.removeItem("uemail");
@@ -48,6 +47,8 @@ export default {
 					localStorage.removeItem("uillegalTime");
 					localStorage.removeItem("ustatus");
 					localStorage.removeItem("uface");
+					this.$toast.success("选择了确定！");
+					location.reload();
 				} else {
 					this.$toast.message("取消修改。");
 				}

@@ -46,8 +46,14 @@ public class CopywritingController {
 
     @PostMapping("/addcw")
     public int addCopywriting(@RequestBody Copywriting copywriting){
-        System.out.println(copywriting.toString());
+//        System.out.println(copywriting.toString());
         int row = copywritingService.addCopyWriting(copywriting);
+        return row;
+    }
+
+    @RequestMapping("/deletecwbycwid")
+    public int deteleCopyWriting(int cwid) {
+        int row = copywritingService.deleteCopyWriting(cwid);
         return row;
     }
 

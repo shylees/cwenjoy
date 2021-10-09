@@ -1,7 +1,12 @@
 <template>
 	<ul class="centence">
 		<h2 class="title">历史文案</h2>
-		<li class="CenItem" v-for="(item, index) in this.cwdataed" :key="item.cwid">
+		<li
+			class="CenItem"
+			v-for="(item, index) in this.cwdataed"
+			:key="item.cwid"
+			:data-cwid="item.cwid"
+		>
 			<span>{{ index + 1 }}.{{ item.cwtext }} </span>
 			<b
 				class="demo-button share showof"
@@ -12,7 +17,7 @@
 			<b
 				class="demo-button deletecw showof"
 				color="secondary"
-				@click="confirmDelete()"
+				@click="confirmDelete($event)"
 				><i>删除</i></b
 			>
 			<p>
@@ -35,12 +40,33 @@ export default {
 		};
 	},
 	methods: {
-		confirmDelete() {
+		// 删除历史文案
+		confirmDelete(e) {
+			const cwid = e.currentTarget.parentElement.dataset.cwid;
 			this.$confirm("确定要删除该文案？", "tip", {
 				type: "warning",
 			}).then(({ result }) => {
 				if (result) {
-					this.$toast.success("删除成功！");
+					axios({
+						method: "get",
+						url: "/deletecwbycwid",
+						params: {
+							cwid,
+						},
+						headers: {},
+					})
+						.then((res) => {
+							console.log(res);
+							if (res != 0) {
+								this.$toast.success("删除成功！");
+								location.reload();
+							} else {
+								this.$toast.error("删除失败！");
+							}
+						})
+						.catch((err) => {
+							console.log(err);
+						});
 				} else {
 					this.$toast.message("取消删除。");
 				}
@@ -58,9 +84,11 @@ export default {
 				params: {
 					uid: localStorage.uid,
 				},
+				headers: {
+					"content-type": "application/json;",
+				},
 			})
 				.then((res) => {
-					console.log(res);
 					this.cwdataed = res.data;
 				})
 				.catch((err) => {

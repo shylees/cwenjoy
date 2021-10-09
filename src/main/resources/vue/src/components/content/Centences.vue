@@ -76,8 +76,6 @@ export default {
 				})
 				.then((res) => {
 					this.cwdata = res.data;
-					// console.log(this.cwdata);
-					// console.log(res);
 				})
 				.catch((err) => {
 					console.log(err);
