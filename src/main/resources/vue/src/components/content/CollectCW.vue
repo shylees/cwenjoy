@@ -1,7 +1,7 @@
 <template>
 	<ul class="centence" :key="key">
 		<h2 class="title">文案收藏</h2>
-		<li class="CenItem" v-for="item in this.collectdata" :key="item.cwid">
+		<li class="CenItem" v-for="item in collectdata" :key="item.cwid">
 			<span>{{ item.cwtext }} </span>
 
 			<b
@@ -39,6 +39,11 @@ export default {
 			key: Date.parse(new Date()),
 		};
 	},
+	computed: {
+		collectdata_dis() {
+			return this.collectdata;
+		},
+	},
 	methods: {
 		// 收藏
 		confirmCollected(e) {
@@ -57,12 +62,35 @@ export default {
 					}).then((res) => {
 						if (res.data) {
 							this.$toast.success("成功取消收藏！");
+							this.update();
 						}
 					});
 				} else {
 					this.$toast.message("选择了取消。");
 				}
 			});
+		},
+		update() {
+			axios({
+				method: "get",
+				url: "/initcollectbyid",
+				params: {
+					uid: localStorage.uid,
+				},
+			})
+				.then((res) => {
+					this.collectdata = res.data;
+					this.cwidlist = [];
+					for (let i = 0; i < res.data.length; i++) {
+						this.cwidlist.push(res.data[i].cwid);
+					}
+					localStorage.setItem("cwidlist", this.cwidlist);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			// localStorage.removeItem("cwidlist");
+			// this.key = Date.parse(new Date());
 		},
 	},
 	mounted() {
@@ -76,6 +104,7 @@ export default {
 		})
 			.then((res) => {
 				this.collectdata = res.data;
+				this.cwidlist = [];
 				for (let i = 0; i < res.data.length; i++) {
 					this.cwidlist.push(res.data[i].cwid);
 				}
@@ -84,27 +113,6 @@ export default {
 			.catch((err) => {
 				console.log(err);
 			});
-	},
-	update() {
-		axios({
-			method: "get",
-			url: "/initcollectbyid",
-			params: {
-				uid: localStorage.uid,
-			},
-		})
-			.then((res) => {
-				this.collectdata = res.data;
-				for (let i = 0; i < res.data.length; i++) {
-					this.cwidlist.push(res.data[i].cwid);
-				}
-				localStorage.setItem("cwidlist", this.cwidlist);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-		// localStorage.removeItem("cwidlist");
-		// this.key = Date.parse(new Date());
 	},
 };
 </script>

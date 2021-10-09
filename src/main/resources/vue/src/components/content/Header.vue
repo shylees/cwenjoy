@@ -218,7 +218,6 @@ export default {
 			this.$refs.form.validate().then((result) => {
 				console.log("form valid: ", result);
 			});
-			// console.log(this.signupMessage.uname);
 		},
 		clear() {
 			this.$refs.form.clear();
@@ -230,6 +229,7 @@ export default {
 			this.issignin = false;
 			this.issignup = false;
 		},
+
 		// 登录
 		signin() {
 			axios
@@ -247,8 +247,6 @@ export default {
 					} else {
 						this.$toast.error("用户id/密码错误！");
 					}
-
-					console.log(this.issignin);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -260,6 +258,8 @@ export default {
 		publishcw() {
 			if (!localStorage.uid) {
 				this.$toast.warning("请先登录");
+			} else if (!this.$refs.publishcwval.value) {
+				this.$toast.warning("没有编写文案");
 			} else {
 				axios({
 					method: "post",
@@ -275,17 +275,18 @@ export default {
 					},
 				})
 					.then((res) => {
-						console.log(res);
 						if (res) {
 							this.$toast.success("已发布文案！");
+							location.reload();
 						}
 					})
 					.catch((err) => {
 						console.log(err);
 					});
-				this.ispublicBoxShow = false;
+
 				// this.$refs.pubform.;
 			}
+			this.ispublicBoxShow = false;
 		},
 	},
 	mounted() {
@@ -318,7 +319,7 @@ export default {
 	right: 0;
 	left: 0;
 	background: rgba(250, 250, 250, 0.3);
-	box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.08);
+	box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.08);
 }
 
 .header > div {
