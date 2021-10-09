@@ -173,6 +173,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
 	name: "Header",
 	components: {},
@@ -227,6 +228,20 @@ export default {
 		},
 	},
 	mounted() {
+		// get传参数
+		axios
+			.get("http://localhost:8080/u", {
+				headers: {
+					"Access-Control-Allow-Origin": "*",
+				},
+			})
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+
 		if (localStorage.cwuname != undefined) {
 			this.isLogin = true;
 			this.userface = localStorage.userface;

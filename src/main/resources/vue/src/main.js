@@ -12,6 +12,7 @@ import SuiVue from 'semantic-ui-vue';
 import 'semantic-ui-css/semantic.min.css';
 
 import Vue from 'vue'
+import axios from 'axios'
 import router from './router'
 import App from './App'
 // import Helpers from 'muse-ui/lib/Helpers';
@@ -29,5 +30,5 @@ new Vue({
   el: '#app',
   router,
   render: h => h(App),
-  
+
 })

@@ -46,20 +46,83 @@ export default {
 </script>
 
 <style socped>
-@import url("../../assets/css/base.css");
+/* 不知道为什么这里不能有 否侧提示框会有问题 */
+/* @import url("../../assets/css/base.css"); */
 
-.dialogBox {
+.publishNotion {
 	/* background-color: #fbfbfb; */
 	width: 80%;
 	margin: 0 auto;
 }
-.dialogBox div {
-	background-color: #fff;
+.title {
+	width: 100%;
+	height: 4rem;
+	font-weight: 700;
+	line-height: 4rem;
+	font-size: 1.1rem;
+	color: rgb(11, 11, 167);
+	text-align: center;
+	letter-spacing: 2px;
+	font-family: Gabriola;
 }
-.dialogBox div.mu-input-line {
+
+input {
+	height: 2.4em;
+	font-size: 0.8em;
+	padding: 0 10px;
+	line-height: 2.4em;
+	color: #777;
+	border: #111 1px solid;
+	border-radius: 8px;
+}
+
+.button {
+	width: 100%;
+	height: 3em;
+	position: relative;
+}
+
+button {
+	background-color: rgb(230, 230, 250);
+	outline: none;
+	/* background-color: rgb(107, 107, 165); */
+	width: 4em;
+	height: 1.8em;
+	line-height: 2em;
+	/* padding: 0.5% 1em; */
+	font-size: 14px;
+	border-radius: 12px;
+	/* border: 1px solid #555; */
+	position: absolute;
+	right: 0;
+	transform: translateX(-60%);
+	border: none;
+}
+button:hover {
+	background-color: rgba(230, 230, 250, 0.68);
+}
+.dialogBox .cancel {
+	left: 0;
+	transform: translateX(0%);
+}
+
+.dialogBox .confirm {
+	position: absolute;
+	transform: translateX(-0%);
+}
+
+.dialogBox button:hover {
+	color: #000;
+	/* font-weight: 700; */
+	/* background: ; */
+	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.08);
+	background-color: rgb(230, 230, 250);
+}
+
+.publishNotion div.mu-input-line {
 	background-color: rgba(0, 0, 0, 0.12);
 }
-.dialogBox div.mu-input-focus-line {
+.publishNotion div.mu-input-focus-line {
 	background-color: rgb(51, 51, 51);
 }
 .mu-radio-label {
@@ -68,5 +131,15 @@ export default {
 	font-size: 15px;
 	text-align: left;
 	margin-left: 5px;
+}
+.dialogBox .dialog-footer {
+	transform: translateY(-40%);
+	/* border: #333 1px solid; */
+	width: 50%;
+	height: 2.2em;
+	position: relative;
+	display: block;
+	margin: 0 auto;
+	font-size: 13px;
 }
 </style>

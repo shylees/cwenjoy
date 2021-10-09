@@ -79,6 +79,7 @@ export default {
 }
 
 .tabbar > div {
+	cursor: pointer;
 	flex: 1;
 	position: relative;
 }

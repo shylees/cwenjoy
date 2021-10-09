@@ -1,6 +1,7 @@
 package com.lsy.cw.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lsy.cw.dao.UserDao;
 import com.lsy.cw.pojo.User;
 
@@ -13,24 +14,22 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins="*",maxAge = 3600)
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @RequestMapping("/u")
-    public String queryAllUser() {
+    public String queryAllUser() throws Exception {
         List<User> users = userService.queryAllUser();
-        StringBuilder sb = new StringBuilder();
-        for (User user : users) {
-            sb.append(user.toString()+"\n");
-        }
-        return sb.toString();
+        
+        return new ObjectMapper().writeValueAsString(users);
     }
 
-    @GetMapping ("/u")
-    public String queryUserById(int id) {
-        User user = userService.queryUserById(id);
-        return user.toString();
-    }
+//    @GetMapping ("/u")
+//    public String queryUserById(int id) {
+//        User user = userService.queryUserById(id);
+//        return user.toString();
+//    }
 }

@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style scoped>
-@import url("../../assets/css/base.css");
+/* @import url("../../assets/css/base.css"); */
 
 .per {
 	width: 85%;
@@ -88,6 +88,6 @@ export default {
 	width: 100%;
 	top: 0;
 	height: auto;
-	background-color: #fff;
+	/* background-color: #fff; */
 }
 </style>
