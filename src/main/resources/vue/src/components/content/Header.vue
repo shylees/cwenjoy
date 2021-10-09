@@ -2,7 +2,8 @@
 	<div class="header">
 		<!-- logo -->
 		<div class="logo">
-			<img src="../../assets/logo.jpg" alt="" title="cwenjoy" />
+			<!-- <img src="../../assets/logo.jpg" alt="" title="cwenjoy" /> -->
+			logo
 		</div>
 
 		<!-- public  btn 和 box -->
@@ -15,6 +16,7 @@
 				class="publishBox dialogBox"
 				:visible.sync="ispublicBoxShow"
 				width="40%"
+				ref="pubform"
 			>
 				<h2 class="title">发表文案</h2>
 				<textarea
@@ -22,6 +24,7 @@
 					cols="40"
 					rows="4"
 					placeholder="分享你的文案吧！"
+					ref="publishcwval"
 				></textarea>
 				<mu-form
 					:model="cw"
@@ -43,10 +46,7 @@
 						@click="(ispublicBoxShow = false), $toast.message('选择了取消。')"
 						>取 消</el-button
 					>
-					<el-button
-						class="confirm"
-						type="primary"
-						@click="(ispublicBoxShow = false), $toast.success('已发布文案！')"
+					<el-button class="confirm" type="primary" @click="publishcw"
 						>确 定</el-button
 					>
 				</span>
@@ -79,18 +79,20 @@
 						>
 					</div>
 					<mu-container>
-						<mu-form ref="form" :model="validateForm" class="mu-demo-form">
+						<mu-form ref="form" :model="signinMessage" class="mu-demo-form">
 							<mu-form-item
-								label="用户名"
+								label="用户名/用户id"
 								prop="username"
 								:rules="inUnameRules"
 								align="left"
 							>
 								<mu-text-field
-									v-model="validateForm.username"
+									v-model="signinMessage.username"
 									prop="username"
+									ref="signinidval"
 								></mu-text-field>
 							</mu-form-item>
+
 							<mu-form-item
 								align="left"
 								label="密码"
@@ -99,8 +101,9 @@
 							>
 								<mu-text-field
 									type="password"
-									v-model="validateForm.password"
+									v-model="signinMessage.password"
 									prop="password"
+									ref="signinidpwd"
 								></mu-text-field>
 							</mu-form-item>
 						</mu-form>
@@ -108,7 +111,7 @@
 
 					<span slot="footer" class="dialog-footer">
 						<el-button class="cancel" @click="clear">取 消</el-button>
-						<el-button class="confirm" @click="submit">登 录</el-button>
+						<el-button class="confirm" @click="signin">登 录</el-button>
 					</span>
 				</el-dialog>
 
@@ -184,13 +187,14 @@ export default {
 				cwtype: "0",
 			},
 			ispublicBoxShow: false,
-
 			isLogin: false,
 			issignin: false,
+			signinid: "",
+			siginpwd: "",
 			issignup: false,
 			inUnameRules: [{ validate: (val) => !!val, message: "必须填写用户名" }],
 			inPwdRules: [{ validate: (val) => !!val, message: "必须填写密码" }],
-			validateForm: {
+			signinMessage: {
 				username: "",
 				password: "",
 				isAgree: false,
@@ -214,11 +218,11 @@ export default {
 			this.$refs.form.validate().then((result) => {
 				console.log("form valid: ", result);
 			});
-			console.log(this.signupMessage.uname);
+			// console.log(this.signupMessage.uname);
 		},
 		clear() {
 			this.$refs.form.clear();
-			this.validateForm = {
+			this.signinMessage = {
 				username: "",
 				password: "",
 				isAgree: false,
@@ -226,25 +230,72 @@ export default {
 			this.issignin = false;
 			this.issignup = false;
 		},
-	},
-	mounted() {
-		// get传参数
-		axios
-			.get("http://localhost:8080/u", {
+		// 登录
+		signin() {
+			axios
+				.get("http://localhost:8080/signin", {
+					params: {
+						uid: this.$refs.signinidval.value,
+					},
+				})
+				.then((res) => {
+					if (res.data.upwd === this.$refs.signinidpwd.value) {
+						for (const key in res.data) {
+							localStorage.setItem(key, res.data[key]);
+						}
+						this.$$toast.success("登录成功！");
+					} else {
+						this.$toast.error("用户id/密码错误！");
+					}
+
+					console.log(this.issignin);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+			this.$refs.form.clear();
+			this.issignin = false;
+		},
+		// 发布
+		publishcw() {
+			axios({
+				method: "post",
+				url: "http://localhost:8080/addcw/",
+				data: {
+					uid: localStorage.uid,
+					cwtext: this.$refs.publishcwval.value,
+					cwtype: this.cw.cwtype,
+					cwtime: Date.parse(new Date()),
+				},
 				headers: {
-					"Access-Control-Allow-Origin": "*",
+					"content-type": "application/json;",
 				},
 			})
-			.then((response) => {
-				console.log(response);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-
-		if (localStorage.cwuname != undefined) {
+				.then((res) => {
+					console.log(res);
+					if (res) {
+						this.$toast.success("已发布文案！");
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			this.ispublicBoxShow = false;
+			// this.$refs.pubform.;
+		},
+	},
+	mounted() {
+		if (localStorage.uname != undefined) {
 			this.isLogin = true;
-			this.userface = localStorage.userface;
+			this.userface = localStorage.uface;
+		} else {
+			this.isLogin = false;
+		}
+	},
+	updated() {
+		if (localStorage.uname != undefined) {
+			this.isLogin = true;
+			this.userface = localStorage.uface;
 		} else {
 			this.isLogin = false;
 		}
@@ -338,12 +389,6 @@ form.cwtype .fields {
 	width: auto;
 }
 
-.header .signinBox .el-dialog__body .el-dialog__header {
-	/* height: 50px; */
-}
-.header .signinBox div {
-	/* background-color: #fff; */
-}
 .mu-radio {
 	height: 32px;
 }

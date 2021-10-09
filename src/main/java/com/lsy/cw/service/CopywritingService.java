@@ -2,6 +2,7 @@ package com.lsy.cw.service;
 
 import com.lsy.cw.pojo.Copywriting;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CopywritingService {

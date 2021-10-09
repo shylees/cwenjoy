@@ -7,8 +7,8 @@
 			description="请登录"
 		></el-empty>
 
-		<!-- <UserPre v-show="this.isLogin && this.userID == 1" /> -->
-		<ManagerPer v-show="this.isLogin && this.userID == 1" />
+		<UserPre v-show="this.isLogin && this.uid != 1" />
+		<ManagerPer v-show="this.isLogin && this.uid == 1" />
 		<div class="out">
 			<button v-if="this.isLogin" class="signout" @click="signout()">
 				退出登录
@@ -30,7 +30,7 @@ export default {
 	data() {
 		return {
 			isLogin: false,
-			userID: "",
+			uid: "",
 		};
 	},
 	methods: {
@@ -40,6 +40,14 @@ export default {
 			}).then(({ result }) => {
 				if (result) {
 					this.$toast.success("选择了确定！");
+					localStorage.removeItem("uid");
+					localStorage.removeItem("uname");
+					localStorage.removeItem("uemail");
+					localStorage.removeItem("upwd");
+					localStorage.removeItem("usex");
+					localStorage.removeItem("uillegalTime");
+					localStorage.removeItem("ustatus");
+					localStorage.removeItem("uface");
 				} else {
 					this.$toast.message("取消修改。");
 				}
@@ -47,13 +55,9 @@ export default {
 		},
 	},
 	mounted() {
-		// localStorage.removeItem("username");
-		// for (let val in this.user) {
-		// 	localStorage.setItem(val, this.user[val]);
-		// }
-		if (localStorage.cwuname) {
+		if (localStorage.uname) {
 			this.isLogin = true;
-			this.userID = localStorage.userID;
+			this.uid = localStorage.uid;
 		} else {
 			this.isLogin = false;
 		}

@@ -23,13 +23,13 @@ public class UserController {
     @RequestMapping("/u")
     public String queryAllUser() throws Exception {
         List<User> users = userService.queryAllUser();
-        
         return new ObjectMapper().writeValueAsString(users);
     }
 
-//    @GetMapping ("/u")
-//    public String queryUserById(int id) {
-//        User user = userService.queryUserById(id);
-//        return user.toString();
-//    }
+    @RequestMapping("/signin")
+    public String queryUserById(int uid) throws Exception{
+        User user = userService.queryUserById(uid);
+        return new ObjectMapper().writeValueAsString(user);
+    }
+
 }

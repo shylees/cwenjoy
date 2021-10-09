@@ -7,34 +7,34 @@
 
 		<div class="information">
 			<div class="facebig userface">
-				<img :src="this.user.userface" alt="" />
+				<img :src="this.user.uface" alt="" />
 				<b class="line"></b>
 			</div>
 			<div class="letters">
 				<ul>
 					<li>
 						<span>用户id:</span>
-						<span class="userID">{{ this.user.userID }}</span>
+						<span class="userID">{{ this.user.uid }}</span>
 					</li>
 					<li>
 						<span>邮箱:</span>
-						<span class="useremail"> {{ this.user.useremail }} </span>
+						<span class="useremail"> {{ this.user.uemail }} </span>
 					</li>
 					<li>
 						<span>用户名:</span>
-						<span class="cwuname"> {{ this.user.cwuname }} </span>
+						<span class="cwuname"> {{ this.user.uname }} </span>
 					</li>
 					<li>
 						<span>性别:</span>
-						<span class="sexValue">{{ this.user.sexValue }}</span>
+						<span class="sexValue">{{ this.user.usex }}</span>
 					</li>
 					<li>
 						<span>违规次数:</span>
-						<span class="illegalTime"> {{ this.user.illegalTime }} </span>
+						<span class="illegalTime"> {{ this.user.uillegalTime }} </span>
 					</li>
 					<li>
 						<span>账号状态:</span>
-						<span class="userstatue"> {{ this.user.userstatue }} </span>
+						<span class="userstatue"> {{ this.user.ustatus }} </span>
 					</li>
 				</ul>
 			</div>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { getChangeValues, toEdit, toSubmit } from "./edit";
+import { getChangeValues, toEdit } from "./edit";
 export default {
 	name: "Perinformation",
 	data() {
@@ -51,13 +51,13 @@ export default {
 			isedit: true,
 			issubmit: false,
 			user: {
-				userID: "",
-				useremail: "",
-				cwuname: "",
-				sexValue: "",
-				illegalTime: "",
-				userstatue: "",
-				userface: "",
+				uid: "",
+				uemail: "",
+				uname: "",
+				usex: "",
+				uillegalTime: "",
+				ustatus: "",
+				uface: "",
 			},
 		};
 	},
@@ -87,7 +87,7 @@ export default {
 				this.user[key] = userval[key];
 				localStorage.setItem(key, userval[key]);
 			}
-			console.log(localStorage);
+			// console.log(localStorage);
 			this.$toast.success("修改成功！");
 		},
 	},

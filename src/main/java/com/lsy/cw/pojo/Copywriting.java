@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Copywriting {
+public class  Copywriting {
         private int cwid;
 
         private int uid;

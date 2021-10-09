@@ -63,15 +63,6 @@ export default {
 			isLogin: false,
 			persider: ["个人资料", "历史文案", "文案收藏"],
 			persideractive: "个人资料",
-			user: {
-				userID: "",
-				useremail: "",
-				cwuname: "",
-				sexValue: "",
-				illegalTime: "",
-				userstatue: "",
-				userface: "",
-			},
 		};
 	},
 	methods: {
@@ -83,11 +74,7 @@ export default {
 		},
 	},
 	mounted() {
-		// localStorage.removeItem("username");
-		for (let val in this.user) {
-			localStorage.setItem(val, this.user[val]);
-		}
-		if (localStorage.cwuname) {
+		if (localStorage.uname) {
 			this.isLogin = true;
 		} else {
 			this.isLogin = false;

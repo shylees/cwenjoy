@@ -11,13 +11,14 @@
 					full-width
 					:opacity="0.7"
 				>
-					<mu-tab data-type="0">全部</mu-tab>
-					<mu-tab data-type="1">生活文艺</mu-tab>
-					<mu-tab data-type="2">阳光向上</mu-tab>
-					<mu-tab data-type="3">悲观文学</mu-tab>
-					<mu-tab data-type="4">听闻爱情</mu-tab>
-					<mu-tab data-type="5">祝福语</mu-tab>
+					<mu-tab @click="getAllcw">全部</mu-tab>
+					<mu-tab data-type="0" @click="changeCWdata($event)">生活文艺</mu-tab>
+					<mu-tab data-type="1" @click="changeCWdata($event)">阳光向上</mu-tab>
+					<mu-tab data-type="2" @click="changeCWdata($event)">悲观文学</mu-tab>
+					<mu-tab data-type="3" @click="changeCWdata($event)">听闻爱情</mu-tab>
+					<mu-tab data-type="4" @click="changeCWdata($event)">祝福语</mu-tab>
 				</mu-tabs>
+
 				<ul class="centence">
 					<li
 						class="CenItem"
@@ -26,6 +27,11 @@
 					>
 						<span>{{ index + 1 }}.{{ item.cwtext }}</span>
 						<p>
+							<b class="time" style="">
+								发布时间:{{
+									new Date(item.cwtime).toLocaleString().substring(0, 10)
+								}}
+							</b>
 							<b
 								class="demo-button"
 								@click="$toast.success('收藏成功！')"
@@ -50,22 +56,13 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
 	name: "Centences",
 	data() {
 		return {
 			// active1: 0,
-			cwdata: [
-				{ cwid: "1", cwtext: "用绝对清醒的理智，压制不该有的情绪" },
-				{
-					cwid: "2",
-					cwtext: "时间会在眨眼间流逝，顺其自然还是用尽全力？",
-				},
-				{
-					cwid: "3",
-					cwtext: "你对我的百般注解构成不了万分之一的我，却是一览无遗的你自己.",
-				},
-			],
+			cwdata: [],
 		};
 	},
 	methods: {
@@ -80,6 +77,53 @@ export default {
 				}
 			});
 		},
+		// 得到不同类型的cw
+		changeCWdata(e) {
+			console.log(e.currentTarget.dataset.type);
+			axios
+				.get("http://localhost:8080/initcwByType", {
+					params: {
+						cwtype: e.currentTarget.dataset.type,
+					},
+				})
+				.then((res) => {
+					this.cwdata = res.data;
+					// console.log(this.cwdata);
+					// console.log(res);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		},
+		// 得到全部cw
+		getAllcw() {
+			axios
+				.get("http://localhost:8080/initcwAll", {
+					headers: { "Access-Control-Allow-Origin": "*" },
+				})
+				.then((res) => {
+					this.cwdata = res.data;
+					// console.log(this.cwdata);
+					// console.log(res);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		},
+	},
+	mounted() {
+		axios
+			.get("http://localhost:8080/initcwAll", {
+				headers: { "Access-Control-Allow-Origin": "*" },
+			})
+			.then((res) => {
+				this.cwdata = res.data;
+				// console.log(this.cwdata);
+				// console.log(res);
+			})
+			.catch((err) => {
+				// console.log(err);
+			});
 	},
 };
 </script>
@@ -154,6 +198,14 @@ export default {
 }
 .s .centences .CenItem > p b:hover {
 	color: #000;
+}
+.s .centences .CenItem > p b.time {
+	font-size: 13px;
+	cursor: text;
+	margin-right: 30px;
+}
+.s .centences .CenItem > p b.time:hover {
+	color: #aaa;
 }
 
 div.mu-tab,

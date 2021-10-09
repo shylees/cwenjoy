@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Centences from "./Centences.vue";
 export default {
 	name: "Cwplay",
@@ -21,4 +22,8 @@ export default {
 
 <style scoped>
 @import url("../../assets/css/base.css");
+.cwplay {
+	overflow: scroll;
+	height: 80vh;
+}
 </style>
