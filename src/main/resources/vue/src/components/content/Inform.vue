@@ -5,6 +5,18 @@
 		<div>
 			<ul class="informs">
 				<li class="InfItem" v-for="item in this.indata" :key="item.cwid">
+					<mu-icon
+						left
+						value="check_circle"
+						color="green"
+						v-if="item.intype == 0"
+					></mu-icon>
+					<mu-icon
+						left
+						value="warning"
+						color="yellow"
+						v-if="item.intype == 1"
+					></mu-icon>
 					<span class="intext">{{ item.intext }}</span>
 					<el-divider class="intime" content-position="right">{{
 						item.intime
@@ -22,16 +34,24 @@ export default {
 		return {
 			active1: 0,
 			indata: [
-				{ inid: "1", intext: "系统更新登录功能", intime: "2021/10/5" },
+				// 0 更新 1 警告
+				{
+					inid: "1",
+					intext: "系统更新登录功能",
+					intime: "2021/10/5",
+					intype: "0",
+				},
 				{
 					inid: "2",
 					intext: "id为1的用户的文章被举报",
 					intime: "2021/10/4",
+					intype: "1",
 				},
 				{
 					inid: "3",
 					intext: "id为2的用户被警告一次",
 					intime: "2021/10/3  ",
+					intype: "1",
 				},
 			],
 		};
@@ -75,12 +95,21 @@ export default {
 	padding: 10px 15px 5px;
 	margin: 10px auto;
 }
+
+.s .informs .InfItem .mu-icon {
+	float: left;
+}
 .s .informs .InfItem .intext {
 	font-size: 16px;
 	display: block;
-	padding: 0 0 0 10px;
+	padding: 0 0 0 30px;
 	/* padding-right: 20px; */
+	height: 1.5rem;
+	line-height: 1.5rem;
 	margin-bottom: 10px;
+	/* margin-right: ; */
+	/* float: left; */
+	/* width: 80%; */
 }
 
 .s .informs .InfItem .intime .el-divider__text {

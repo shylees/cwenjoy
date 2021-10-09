@@ -44,13 +44,15 @@
 				</sui-form>
 
 				<span slot="footer" class="dialog-footer">
-					<el-button class="cancel" @click="ispublicBoxShow = false"
+					<el-button
+						class="cancel"
+						@click="(ispublicBoxShow = false), $toast.message('选择了取消。')"
 						>取 消</el-button
 					>
 					<el-button
 						class="confirm"
 						type="primary"
-						@click="ispublicBoxShow = false"
+						@click="(ispublicBoxShow = false), $toast.success('已发布文案！')"
 						>确 定</el-button
 					>
 				</span>
@@ -282,63 +284,6 @@ export default {
 	height: 2.8rem;
 	border-radius: 3rem;
 	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.08);
-}
-
-.header .dialogBox {
-	background-color: rgba(255, 255, 255, 0.15);
-	/* font-family: "Microsoft YaHei"; */
-}
-
-.header .publish .publishBox textarea {
-	width: 60%;
-	transform: translateY(-10%);
-	border: 1px #333 solid;
-	border-radius: 16px;
-	box-sizing: border-box;
-	padding: 20px;
-	font-size: 0.875rem;
-	line-height: 1.2em;
-}
-.dialogBox .el-dialog {
-	margin-top: 20vh;
-	background-color: #fbfbfb;
-}
-.dialogBox .el-dialog__close::before:hover {
-	color: rgb(94, 94, 196);
-}
-.dialogBox .dialog-footer {
-	transform: translateY(-40%);
-	/* border: #333 1px solid; */
-	width: 50%;
-	height: 2.2em;
-	position: relative;
-	display: block;
-	margin: 0 auto;
-	font-size: 13px;
-}
-.dialogBox button {
-	width: 4.75rem;
-	height: 1.75rem;
-	position: absolute;
-	line-height: 2.2em;
-}
-
-.dialogBox .cancel {
-	left: 0;
-	transform: translateX(0%);
-}
-
-.dialogBox .confirm {
-	position: absolute;
-	transform: translateX(-0%);
-}
-
-.dialogBox button:hover {
-	color: #000;
-	/* font-weight: 700; */
-	/* background: ; */
-	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.08);
-	background-color: rgb(230, 230, 250);
 }
 
 .header .userface {

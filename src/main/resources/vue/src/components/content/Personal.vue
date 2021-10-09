@@ -7,17 +7,20 @@
 			description="请登录"
 		></el-empty>
 
-		<UserPre v-show="this.isLogin && this.userID == 1" />
+		<UserPre v-show="this.isLogin && this.userID != 1" />
+		<ManagerPer v-show="this.isLogin && this.userID == 1" />
 	</div>
 </template>
 
 <script>
 import UserPre from "./UserPer.vue";
+import ManagerPer from "./ManagerPer.vue";
 export default {
 	name: "Personal",
 
 	components: {
 		UserPre,
+		ManagerPer,
 	},
 	data() {
 		return {
