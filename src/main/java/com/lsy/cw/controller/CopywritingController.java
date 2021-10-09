@@ -32,6 +32,18 @@ public class CopywritingController {
         return new ObjectMapper().writeValueAsString(copywritings);
     }
 
+    @RequestMapping("/getcwbycwid")
+    public String queryCopywritingByCwid(int cwid) throws Exception{
+        Copywriting copywriting = copywritingService.queryCopyWritingByCwid(cwid);
+        return new ObjectMapper().writeValueAsString(copywriting);
+    }
+
+    @RequestMapping("/getcwbyuid")
+    public String queryCopywritingById(int uid) throws Exception{
+        List<Copywriting> copywritings = copywritingService.queryCopyWritingByUid(uid);
+        return new ObjectMapper().writeValueAsString(copywritings);
+    }
+
     @PostMapping("/addcw")
     public int addCopywriting(@RequestBody Copywriting copywriting){
         System.out.println(copywriting.toString());

@@ -1,5 +1,5 @@
 <template>
-	<ul class="centence">
+	<ul class="centence" :key="key">
 		<h2 class="title">文案收藏</h2>
 		<li class="CenItem" v-for="item in this.collectdata" :key="item.cwid">
 			<span>{{ item.cwtext }} </span>
@@ -13,52 +13,98 @@
 			<b
 				class="demo-button deteleCollect showof"
 				color="secondary"
-				@click="confirmCollected()"
+				@click="confirmCollected($event)"
+				:data-cwid="item.cwid"
 				><i>取消收藏</i></b
 			>
 			<p>
-				<b class="time">收藏时间: <br />{{ item.ctime }}</b>
+				<b class="time"
+					>收藏时间: <br />{{
+						new Date(item.ctime).toLocaleString().substring(0, 10)
+					}}</b
+				>
 			</p>
 		</li>
 	</ul>
 </template>
 
 <script>
+import axios from "axios";
 export default {
 	name: "CollectCW",
 	data() {
 		return {
-			collectdata: [
-				{
-					cwid: "1",
-					cwtext: "用绝对清醒的理智，压制不该有的情绪",
-					ctime: "2021/9/10",
-				},
-				{
-					cwid: "2",
-					ctime: "2021/9/10",
-					cwtext: "时间会在眨眼间流逝，顺其自然还是用尽全力？",
-				},
-				{
-					cwid: "3",
-					ctime: "2021/9/10",
-					cwtext: "你对我的百般注解构成不了万分之一的我，却是一览无遗的你自己.",
-				},
-			],
+			collectdata: [],
+			cwidlist: [],
+			key: Date.parse(new Date()),
 		};
 	},
 	methods: {
-		confirmCollected() {
+		// 收藏
+		confirmCollected(e) {
+			const cwid = e.currentTarget.dataset.cwid;
 			this.$confirm("确定要取消收藏？", "tip", {
 				type: "warning",
 			}).then(({ result }) => {
 				if (result) {
-					this.$toast.success("成功取消收藏！");
+					axios({
+						method: "post",
+						url: "/deletecollect",
+						data: {
+							uid: localStorage.uid,
+							cwid,
+						},
+					}).then((res) => {
+						if (res.data) {
+							this.$toast.success("成功取消收藏！");
+						}
+					});
 				} else {
 					this.$toast.message("选择了取消。");
 				}
 			});
 		},
+	},
+	mounted() {
+		// 获取所有收藏的文案
+		axios({
+			method: "get",
+			url: "/initcollectbyid",
+			params: {
+				uid: localStorage.uid,
+			},
+		})
+			.then((res) => {
+				this.collectdata = res.data;
+				for (let i = 0; i < res.data.length; i++) {
+					this.cwidlist.push(res.data[i].cwid);
+				}
+				localStorage.setItem("cwidlist", this.cwidlist);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	},
+	update() {
+		axios({
+			method: "get",
+			url: "/initcollectbyid",
+			params: {
+				uid: localStorage.uid,
+			},
+		})
+			.then((res) => {
+				this.collectdata = res.data;
+				for (let i = 0; i < res.data.length; i++) {
+					this.cwidlist.push(res.data[i].cwid);
+				}
+				localStorage.setItem("cwidlist", this.cwidlist);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		// localStorage.removeItem("cwidlist");
+		// this.key = Date.parse(new Date());
 	},
 };
 </script>

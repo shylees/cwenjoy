@@ -16,34 +16,22 @@
 				><i>删除</i></b
 			>
 			<p>
-				<b class="demo-button">发布时间: {{ item.cwtime }}</b>
+				<b class="demo-button"
+					>发布时间:
+					{{ new Date(item.cwtime).toLocaleString().substring(0, 10) }}</b
+				>
 			</p>
 		</li>
 	</ul>
 </template>
 
 <script>
+import axios from "axios";
 export default {
 	name: "CollectCW",
 	data() {
 		return {
-			cwdataed: [
-				{
-					cwid: "1",
-					cwtext: "用绝对清醒的理智，压制不该有的情绪",
-					cwtime: "2021/9/10",
-				},
-				{
-					cwid: "2",
-					cwtime: "2021/9/10",
-					cwtext: "时间会在眨眼间流逝，顺其自然还是用尽全力？",
-				},
-				{
-					cwid: "3",
-					cwtime: "2021/9/10",
-					cwtext: "你对我的百般注解构成不了万分之一的我，却是一览无遗的你自己.",
-				},
-			],
+			cwdataed: [],
 		};
 	},
 	methods: {
@@ -58,6 +46,27 @@ export default {
 				}
 			});
 		},
+	},
+	mounted() {
+		// 获取全部历史文案
+		if (!localStorage.uid) {
+			this.$toast.warning("请先登录");
+		} else {
+			axios({
+				method: "get",
+				url: "/getcwbyuid",
+				params: {
+					uid: localStorage.uid,
+				},
+			})
+				.then((res) => {
+					console.log(res);
+					this.cwdataed = res.data;
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
 	},
 };
 </script>

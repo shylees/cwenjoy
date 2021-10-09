@@ -22,20 +22,18 @@
 				<ul class="centence">
 					<li
 						class="CenItem"
-						v-for="(item, index) in this.cwdata"
+						v-for="item in this.cwdata"
 						:key="item.cwid"
+						:data-cwid="item.cwid"
 					>
-						<span>{{ index + 1 }}.{{ item.cwtext }}</span>
+						<span>{{ item.cwtext }}</span>
 						<p>
 							<b class="time" style="">
 								发布时间:{{
 									new Date(item.cwtime).toLocaleString().substring(0, 10)
 								}}
 							</b>
-							<b
-								class="demo-button"
-								@click="$toast.success('收藏成功！')"
-								color="success"
+							<b class="demo-button" @click="collectcw($event)" color="success"
 								>收藏</b
 							>
 							<b
@@ -63,25 +61,15 @@ export default {
 		return {
 			// active1: 0,
 			cwdata: [],
+			cwidlist: [],
 		};
 	},
 	methods: {
-		confirmInform() {
-			this.$confirm("确定要举该文案？", "tip", {
-				type: "warning",
-			}).then(({ result }) => {
-				if (result) {
-					this.$toast.success("举报成功！");
-				} else {
-					this.$toast.message("取消举报。");
-				}
-			});
-		},
 		// 得到不同类型的cw
 		changeCWdata(e) {
 			console.log(e.currentTarget.dataset.type);
 			axios
-				.get("http://localhost:8080/initcwByType", {
+				.get("/initcwByType", {
 					params: {
 						cwtype: e.currentTarget.dataset.type,
 					},
@@ -98,7 +86,7 @@ export default {
 		// 得到全部cw
 		getAllcw() {
 			axios
-				.get("http://localhost:8080/initcwAll", {
+				.get("/initcwAll", {
 					headers: { "Access-Control-Allow-Origin": "*" },
 				})
 				.then((res) => {
@@ -110,20 +98,70 @@ export default {
 					console.log(err);
 				});
 		},
+		// 收藏
+		collectcw(e) {
+			if (!localStorage.uid) {
+				this.$toast.warning("请先登录");
+			} else if (
+				this.cwdilist.includes(
+					e.currentTarget.parentElement.parentElement.dataset.cwid + ""
+				)
+			) {
+				this.$toast.message("已经在收藏夹了!");
+			} else {
+				axios({
+					method: "post",
+					url: "/addcollect",
+					data: {
+						uid: localStorage.uid,
+						cwid: e.currentTarget.parentElement.parentElement.dataset.cwid,
+						ctime: Date.parse(new Date()),
+						cwtext:
+							e.currentTarget.parentElement.previousElementSibling.innerText,
+					},
+					headers: {
+						"content-type": "application/json;",
+					},
+				})
+					.then((res) => {
+						console.log(res);
+						this.$toast.success("收藏成功！");
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			}
+		},
+		// 举报
+		confirmInform() {
+			if (!localStorage.uid) {
+				this.$toast.warning("请先登录");
+			} else {
+				this.$confirm("确定要举该文案？", "tip", {
+					type: "warning",
+				}).then(({ result }) => {
+					if (result) {
+						this.$toast.success("举报成功！");
+					} else {
+						this.$toast.message("取消举报。");
+					}
+				});
+			}
+		},
 	},
 	mounted() {
+		// 初始化 所有cw
 		axios
-			.get("http://localhost:8080/initcwAll", {
+			.get("/initcwAll", {
 				headers: { "Access-Control-Allow-Origin": "*" },
 			})
 			.then((res) => {
 				this.cwdata = res.data;
-				// console.log(this.cwdata);
-				// console.log(res);
 			})
 			.catch((err) => {
-				// console.log(err);
+				console.log(err);
 			});
+		this.cwdilist = localStorage.cwidlist.split(",");
 	},
 };
 </script>

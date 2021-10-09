@@ -15,7 +15,7 @@ public interface CollectDao {
     @Select("select * from collect where uid = #{uid}")
     List<Collect> queryCollectByUid(int uid);
 
-    @Insert("insert into collect (uid, cwid, ctime) values (#{uid}, #{cwid}, #{ctime})")
+    @Insert("insert into collect (uid, cwid, ctime, cwtext) values (#{uid}, #{cwid}, #{ctime}, #{cwtext})")
     int addCollect(Collect collect);
 
     @Delete("delete from collect where uid = #{uid} and cwid = #{cwid}")

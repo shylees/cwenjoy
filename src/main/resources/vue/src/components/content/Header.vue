@@ -233,7 +233,7 @@ export default {
 		// 登录
 		signin() {
 			axios
-				.get("http://localhost:8080/signin", {
+				.get("/signin", {
 					params: {
 						uid: this.$refs.signinidval.value,
 					},
@@ -258,30 +258,34 @@ export default {
 		},
 		// 发布
 		publishcw() {
-			axios({
-				method: "post",
-				url: "http://localhost:8080/addcw/",
-				data: {
-					uid: localStorage.uid,
-					cwtext: this.$refs.publishcwval.value,
-					cwtype: this.cw.cwtype,
-					cwtime: Date.parse(new Date()),
-				},
-				headers: {
-					"content-type": "application/json;",
-				},
-			})
-				.then((res) => {
-					console.log(res);
-					if (res) {
-						this.$toast.success("已发布文案！");
-					}
+			if (!localStorage.uid) {
+				this.$toast.warning("请先登录");
+			} else {
+				axios({
+					method: "post",
+					url: "/addcw",
+					data: {
+						uid: localStorage.uid,
+						cwtext: this.$refs.publishcwval.value,
+						cwtype: this.cw.cwtype,
+						cwtime: Date.parse(new Date()),
+					},
+					headers: {
+						"content-type": "application/json;",
+					},
 				})
-				.catch((err) => {
-					console.log(err);
-				});
-			this.ispublicBoxShow = false;
-			// this.$refs.pubform.;
+					.then((res) => {
+						console.log(res);
+						if (res) {
+							this.$toast.success("已发布文案！");
+						}
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+				this.ispublicBoxShow = false;
+				// this.$refs.pubform.;
+			}
 		},
 	},
 	mounted() {

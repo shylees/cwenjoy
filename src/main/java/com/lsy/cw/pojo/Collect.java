@@ -15,4 +15,6 @@ public class Collect {
     private int cwid;
 
     private Date ctime;
+
+    private String cwtext;
 }

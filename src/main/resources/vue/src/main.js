@@ -16,15 +16,18 @@ import axios from 'axios'
 import router from './router'
 import App from './App'
 // import Helpers from 'muse-ui/lib/Helpers';
-
+// Vue.forceUpdate()
 Vue.config.productionTip = false
-
+Vue.use(axios)
 Vue.use(ElementUI, { size: 'small', zIndex: 3000 });
 Vue.use(MuseUI);
 Vue.use(Toast);
 Vue.use(Message);
 // Vue.use(Helpers);
 Vue.use(SuiVue);
+
+axios.defaults.baseURL = "http://localhost:8080";
+
 
 new Vue({
   el: '#app',
