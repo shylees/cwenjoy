@@ -4,22 +4,22 @@
 		<h2><span>公告</span></h2>
 		<div>
 			<ul class="informs">
-				<li class="InfItem" v-for="item in this.indata" :key="item.cwid">
+				<li class="InfItem" v-for="item in indata" :key="item.cwid">
 					<mu-icon
 						left
 						value="check_circle"
 						color="green"
-						v-if="item.intype == 0"
+						v-if="item.ntype == 0"
 					></mu-icon>
 					<mu-icon
 						left
 						value="warning"
 						color="yellow"
-						v-if="item.intype == 1"
+						v-if="item.ntype == 1"
 					></mu-icon>
-					<span class="intext">{{ item.intext }}</span>
+					<span class="intext">{{ item.ncontext }}</span>
 					<el-divider class="intime" content-position="right">{{
-						item.intime
+						new Date(item.ntime).toLocaleString()
 					}}</el-divider>
 				</li>
 			</ul>
@@ -28,35 +28,47 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
 	name: "Inform",
 	data() {
 		return {
 			active1: 0,
-			indata: [
-				// 0 更新 1 警告
-				{
-					inid: "1",
-					intext: "系统更新登录功能",
-					intime: "2021/10/5",
-					intype: "0",
-				},
-				{
-					inid: "2",
-					intext: "id为1的用户的文章被举报",
-					intime: "2021/10/4",
-					intype: "1",
-				},
-				{
-					inid: "3",
-					intext: "id为2的用户被警告一次",
-					intime: "2021/10/3  ",
-					intype: "1",
-				},
-			],
+			indata: [],
 		};
 	},
-	methods: {},
+	methods: {
+		getallnotion() {
+			axios({
+				method: "get",
+				url: "/queryallnotion",
+			})
+				.then((res) => {
+					console.log(res);
+					this.indata = res.data;
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		},
+	},
+	mounted() {
+		// this.getallnotion();
+		axios({
+			method: "get",
+			url: "/queryallnotion",
+		})
+			.then((res) => {
+				console.log(res);
+				this.indata = res.data;
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	},
+	updated() {
+		// this.getallnotion();
+	},
 };
 </script>
 

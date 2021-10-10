@@ -26,6 +26,7 @@
 						:key="item.cwid"
 						:data-cwid="item.cwid"
 						:data-uid="item.uid"
+						v-if="item.uid != 1"
 					>
 						<span>{{ item.cwtext }}</span>
 						<p>

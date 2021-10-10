@@ -7,6 +7,7 @@
 			v-for="item in indata"
 			:key="item.inid"
 			:data-inid="item.inid"
+			v-if="item.ineduid != 1"
 		>
 			<sup
 				v-show="item.instatus == 0"
@@ -158,8 +159,6 @@ export default {
 				const that = this;
 				const inid = this.warn.informdata[0].inid;
 				const ncontext = this.$refs.warnval[2].value;
-				console.log(inid);
-				console.log(ncontext);
 				axios({
 					method: "post",
 					url: "/addnotion",

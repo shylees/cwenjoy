@@ -8,7 +8,10 @@
 			label-width="100"
 		>
 			<mu-form-item prop="input" label="公告信息:">
-				<mu-text-field v-model="notion.toNotiontext"></mu-text-field>
+				<mu-text-field
+					v-model="notion.toNotiontext"
+					ref="notionval"
+				></mu-text-field>
 			</mu-form-item>
 			<mu-form-item prop="radio" label="公告类型:">
 				<mu-radio v-model="notion.notiontype" value="0" label="更新"></mu-radio>
@@ -20,11 +23,7 @@
 			<button class="cancel" @click="$toast.message('选择了取消。')">
 				取 消
 			</button>
-			<button
-				class="confirm"
-				type="primary"
-				@click="$toast.success('已发布文案！')"
-			>
+			<button class="confirm" type="primary" @click="publishNotion">
 				确 定
 			</button>
 		</span>
@@ -32,6 +31,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
 	name: "PubNotion",
 	data() {
@@ -41,6 +42,40 @@ export default {
 				toNotiontext: "",
 			},
 		};
+	},
+	methods: {
+		publishNotion() {
+			if (!this.$refs.notionval) {
+				this.$toast.warning("公告信息不能为空！");
+			} else {
+				const ntype = this.notion.notiontype;
+				// const ncontext = this.notion.ncontext;
+				const ncontext = this.$refs.notionval.value;
+				// console.log(this.notion);
+
+				axios({
+					method: "post",
+					url: "/addnotion",
+					data: {
+						ncontext,
+						ntime: Date.parse(new Date()),
+						ntype,
+					},
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+					},
+				})
+					.then((res) => {
+						if (res.data > 0) {
+							this.$toast.success("已发布公告！");
+							location.reload();
+						}
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			}
+		},
 	},
 };
 </script>

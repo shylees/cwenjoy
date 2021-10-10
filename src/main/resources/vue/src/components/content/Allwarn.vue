@@ -74,8 +74,10 @@ export default {
 						that.indata[i].cwtext = res.data.cwtext;
 						if (i === that.indata.length - 1) {
 							this.issolveInformShow = true;
+							// location.reload();
 						}
 						this.issolveInformShow = false;
+						// location.reload();
 					})
 					.catch((err) => {
 						console.log(err);
