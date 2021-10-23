@@ -45,18 +45,26 @@ export default {
 	},
 	methods: {
 		// get 全部 inform
-		getallinform() {
-			axios({
+		async getallinform() {
+			let res = await axios({
 				method: "get",
 				url: "/queryAllInform",
-			})
-				.then((res) => {
-					this.indata = res.data;
-					this.getallinformCwtext();
-				})
-				.catch((err) => {
-					console.log(err);
+			});
+
+			console.log(res);
+			for (let i = 0; i < res.data.length; i++) {
+				const cwid = res.data[i].cwid;
+				let res1 = await axios({
+					method: "get",
+					url: "/getcwbycwid",
+					params: {
+						cwid,
+					},
 				});
+				res.data[i].cwtext = res1.data.cwtext;
+			}
+			this.indata = res.data;
+			console.log(res);
 		},
 		getallinformCwtext() {
 			for (let i = 0; i < this.indata.length; i++) {

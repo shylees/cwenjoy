@@ -7,7 +7,6 @@
 			v-for="item in indata"
 			:key="item.inid"
 			:data-inid="item.inid"
-			v-if="item.ineduid != 1"
 		>
 			<sup
 				v-show="item.instatus == 0"
@@ -101,18 +100,41 @@ export default {
 	},
 	methods: {
 		// get 全部 inform
-		getallinform() {
-			axios({
+		async getallinform() {
+			let res = await axios({
 				method: "get",
 				url: "/getallinformbystatusz",
-			})
-				.then((res) => {
-					this.indata = res.data;
-					this.getallinformCwtext();
-				})
-				.catch((err) => {
-					console.log(err);
+			});
+
+			// this.indata = res.data;
+			// this.getallinformCwtext();
+			for (let i = 0; i < res.data.length; i++) {
+				const cwid = res.data[i].cwid;
+				// let res1 = await this.aaa(cwid);
+				// res.data[i].cwtext = res1.data.cwtext;
+				// // this.indata[i] = res.data[i];
+				// this.indata.push(res.data[i]);
+				this.aaa(cwid).then((res1) => {
+					console.log(i);
+					res.data[i].cwtext = res1.data.cwtext;
+					this.indata.push(res.data[i]);
 				});
+			}
+			// this.indata = res.data;
+		},
+		async aaa(cwid) {
+			let res = await axios({
+				method: "get",
+				url: "/getcwbycwid",
+				params: {
+					cwid,
+				},
+			});
+			return new Promise(function (resolve) {
+				setTimeout(function () {
+					resolve(res);
+				}, 2000);
+			});
 		},
 		getallinformCwtext() {
 			for (let i = 0; i < this.indata.length; i++) {
