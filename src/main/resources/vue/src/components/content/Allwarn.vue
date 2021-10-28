@@ -33,8 +33,6 @@ export default {
 	name: "Allwarn",
 	data() {
 		return {
-			issolveInformShow: false,
-
 			warn: {
 				informdata: {},
 				toInformtext: "Inform who ID =  for he ..",
@@ -43,28 +41,46 @@ export default {
 			indata: [],
 		};
 	},
+	computed: {
+		getindata() {
+			return this.indata;
+		},
+	},
 	methods: {
 		// get 全部 inform
-		async getallinform() {
-			let res = await axios({
+		getallinform() {
+			axios({
 				method: "get",
 				url: "/queryAllInform",
-			});
-
-			console.log(res);
-			for (let i = 0; i < res.data.length; i++) {
-				const cwid = res.data[i].cwid;
-				let res1 = await axios({
-					method: "get",
-					url: "/getcwbycwid",
-					params: {
-						cwid,
-					},
+			})
+				.then((res) => {
+					this.indata = res.data;
+					console.log("dd");
+					// this.getallinformCwtext();
+					for (let i = 0; i < this.indata.length; i++) {
+						const cwid = this.indata[i].cwid;
+						const that = this;
+						axios({
+							method: "get",
+							url: "/getcwbycwid",
+							params: {
+								cwid,
+							},
+						})
+							.then((res) => {
+								// console.log(res);
+								that.getindata[i].cwtext = res.data.cwtext;
+								console.log(that.getindata[i]);
+							})
+							.catch((err) => {
+								console.log(err);
+							});
+					}
+				})
+				.catch((err) => {
+					console.log(err);
 				});
-				res.data[i].cwtext = res1.data.cwtext;
-			}
-			this.indata = res.data;
-			console.log(res);
+			// console.log(1);
 		},
 		getallinformCwtext() {
 			for (let i = 0; i < this.indata.length; i++) {
@@ -82,14 +98,13 @@ export default {
 						that.indata[i].cwtext = res.data.cwtext;
 						if (i === that.indata.length - 1) {
 							this.issolveInformShow = true;
-							// location.reload();
 						}
 						this.issolveInformShow = false;
-						// location.reload();
 					})
 					.catch((err) => {
 						console.log(err);
 					});
+				location.reload();
 			}
 		},
 	},
